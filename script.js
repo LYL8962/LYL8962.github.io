@@ -19,6 +19,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Default YouTube track
     const DEFAULT_VIDEO_ID = 'jtL_OQZc5g4';
+    
+    // Get the song name from YouTube API
+    function getSongTitle() {
+        if (player && player.getVideoData) {
+            const videoData = player.getVideoData();
+            if (videoData && videoData.title) {
+                return videoData.title;
+            }
+        }
+        return 'Loading...';
+    }
 
     // Try to initialize YouTube player
     function tryInitializeYouTubePlayer() {
@@ -67,13 +78,36 @@ document.addEventListener('DOMContentLoaded', function() {
         player.setVolume(playerState.volume);
         updateMuteIcon();
         
+        // Update song title
+        const songTitle = getSongTitle();
+        playerTitle.textContent = songTitle;
+        
         // Preload the default video
         player.cueVideoById(DEFAULT_VIDEO_ID);
+        
+        // Auto-play the song when player is ready
+        setTimeout(() => {
+            player.playVideo();
+            playerState.isPlaying = true;
+            updatePlayButton();
+            // Show the audio player
+            audioPlayer.classList.add('active');
+        }, 500);
     }
 
     function onPlayerStateChange(event) {
         playerState.isPlaying = event.data === YT.PlayerState.PLAYING;
         updatePlayButton();
+        
+        // Update song title when playing starts
+        if (playerState.isPlaying) {
+            setTimeout(() => {
+                const songTitle = getSongTitle();
+                if (songTitle && songTitle !== 'Loading...' && songTitle !== 'undefined') {
+                    playerTitle.textContent = songTitle;
+                }
+            }, 1000);
+        }
     }
 
     // =========================================
@@ -87,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const audioPlayer = document.getElementById('audioPlayer');
     const progressSlider = document.getElementById('progressSlider');
     const progressFill = document.getElementById('progressFill');
-    const playerTitle = document.querySelector('.player-title');
+    const playerTitle = document.getElementById('playerTitle');
     const currentTimeEl = document.querySelector('.current-time');
     const durationEl = document.querySelector('.duration');
     
@@ -165,8 +199,16 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.className = 'fas fa-play';
             startMusicBtn.querySelector('span').textContent = 'Start Music';
             startMusicBtn.style.background = 'var(--primary-gradient)';
-            startMusicBtn.querySelector('i').className = 'fas fa-music';
+            startMusicBtn.querySelector('i').className = 'fas fa-play';
         }
+        
+        // Update song title when it changes
+        setTimeout(() => {
+            const songTitle = getSongTitle();
+            if (songTitle && songTitle !== 'Loading...') {
+                playerTitle.textContent = songTitle;
+            }
+        }, 500);
     }
 
     // Update mute icon

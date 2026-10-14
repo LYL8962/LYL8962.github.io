@@ -18,9 +18,9 @@
             <button class="btn-icon" id="playPause" aria-label="Play/Pause">
                 <i class="fas fa-play"></i>
             </button>
-            <div class="player-info">
-                <span class="player-title">Click Start Music</span>
-                <div class="progress-bar-container">
+                <div class="player-info">
+                    <span class="player-title" id="playerTitle">Loading Song...</span>
+                    <div class="progress-bar-container">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
                         <input type="range" id="progressSlider" class="progress-slider" min="0" max="100" value="0">
@@ -38,7 +38,7 @@
 
     <!-- Start Music Button -->
     <button class="start-music-btn" id="startMusic">
-        <i class="fas fa-music"></i>
+        <i class="fas fa-play"></i>
         <span>Start Music</span>
     </button>
 
