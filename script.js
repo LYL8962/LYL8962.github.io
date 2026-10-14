@@ -76,23 +76,52 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check if YouTube API is loaded
     let ytApiLoaded = false;
-    if (typeof YT !== 'undefined' && YT.Player) {
-        onYouTubeIframeAPIReady();
-        ytApiLoaded = true;
-    } else {
-        // Load YouTube API dynamically
+    let apiLoadAttempts = 0;
+    const MAX_API_LOAD_ATTEMPTS = 20;
+    
+    // Try to initialize YouTube player
+    function tryInitializeYouTubePlayer() {
+        if (typeof YT !== 'undefined' && YT.Player) {
+            onYouTubeIframeAPIReady();
+            ytApiLoaded = true;
+            return true;
+        }
+        return false;
+    }
+    
+    // Load YouTube API dynamically if not loaded
+    if (!tryInitializeYouTubePlayer()) {
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        
-        window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
     }
+    
+    // Set up callback for when API is ready
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    
+    // Check periodically if API loaded (for cases where it loads before DOMContentLoaded)
+    const apiCheckInterval = setInterval(() => {
+        if (tryInitializeYouTubePlayer()) {
+            clearInterval(apiCheckInterval);
+        }
+        apiLoadAttempts++;
+        if (apiLoadAttempts >= MAX_API_LOAD_ATTEMPTS) {
+            clearInterval(apiCheckInterval);
+            console.warn('YouTube API failed to load after multiple attempts');
+        }
+    }, 100);
 
     // Start music button click
     startMusicBtn.addEventListener('click', function() {
-        if (!ytApiLoaded) {
-            alert('Please wait a moment while the music player loads...');
+        // Check if YouTube API is available
+        if (typeof YT === 'undefined' || !YT.Player) {
+            alert('Loading YouTube player... Please wait a few seconds and try again.');
+            return;
+        }
+        
+        if (!player) {
+            alert('YouTube player is not initialized yet. Please wait...');
             return;
         }
         
@@ -102,6 +131,10 @@ document.addEventListener('DOMContentLoaded', function() {
             playerState.videoId = DEFAULT_VIDEO_ID;
         }
         
+        // Unmute and play
+        player.unMute();
+        playerState.isMuted = false;
+        updateMuteIcon();
         player.playVideo();
     });
 
