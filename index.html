@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYL8962 | Personal Website</title>
+    <meta name="description" content="Personal website of LYL8962 - Developer, Creator, and Tech Enthusiast">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Audio Player Overlay -->
+    <div class="audio-player" id="audioPlayer">
+        <div class="player-content">
+            <i class="fas fa-music"></i>
+            <div class="player-info">
+                <span class="player-title">Loading...</span>
+                <div class="player-controls">
+                    <button class="btn-icon" id="playPause" aria-label="Play/Pause">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="btn-icon" id="mute" aria-label="Mute/Unmute">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+            <input type="range" id="progressSlider" class="progress-slider" min="0" max="100" value="0">
+        </div>
+        <button class="btn-close" id="closePlayer" aria-label="Close player">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Start Music Button -->
+    <button class="start-music-btn" id="startMusic">
+        <i class="fas fa-music"></i>
+        <span>Start Music</span>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="#home">LYL8962</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="social-links">
+                <a href="https://github.com/LYL8962" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Hello, I'm <span class="highlight">LYL8962</span></h1>
+                <p class="hero-subtitle">Developer | Creator | Tech Enthusiast</p>
+                <p class="hero-description">Building cool things and exploring technology one project at a time.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a passionate developer who loves creating solutions to real-world problems. My journey began with simple projects and has evolved into exploring various aspects of technology.</p>
+                    <p>My interests include:</p>
+                    <ul class="interests-list">
+                        <li><i class="fas fa-code"></i> Software Development</li>
+                        <li><i class="fas fa-gamepad"></i> Game Development</li>
+                        <li><i class="fas fa-pen-nib"></i> Technical Writing</li>
+                        <li><i class="fas fa-tools"></i> Tool Creation</li>
+                    </ul>
+                    <p>Whether it's Python scripts, game modding, or utility tools, I enjoy the process of building and learning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <!-- Project Card 1 -->
+                <div class="project-card">
+                    <div class="project-card-bg"></div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Auto-Clicker</h3>
+                            <span class="project-language">Python</span>
+                        </div>
+                        <p class="project-description">An automation tool for click simulation and task automation.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/LYL8962/Auto-Clicker" target="_blank" class="btn-project">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-card">
+                    <div class="project-card-bg"></div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">ETS2/ATS Save File Guide</h3>
+                            <span class="project-language">Documentation</span>
+                        </div>
+                        <p class="project-description">Comprehensive guide on how to save and edit files in American Truck Simulator and Euro Truck Simulator.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/LYL8962/ETS2-ATS_What-is-in-the-save-file" target="_blank" class="btn-project">
+                                <i class="fab fa-github"></i> View Guide
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card">
+                    <div class="project-card-bg"></div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">LYL8962.github.io</h3>
+                            <span class="project-language">Web</span>
+                        </div>
+                        <p class="project-description">This personal website and portfolio showcasing my work and projects.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/LYL8962/LYL8962.github.io" target="_blank" class="btn-project">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 -->
+                <div class="project-card">
+                    <div class="project-card-bg"></div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Simple-Counter</h3>
+                            <span class="project-language">Python</span>
+                        </div>
+                        <p class="project-description">A basic yet functional counter application built with Python.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/LYL8962/Simple-Counter" target="_blank" class="btn-project">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 -->
+                <div class="project-card">
+                    <div class="project-card-bg"></div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Personal Repository</h3>
+                            <span class="project-language">Various</span>
+                        </div>
+                        <p class="project-description">My main repository containing various projects and experiments.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/LYL8962/LYL8962" target="_blank" class="btn-project">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <p class="contact-description">Have a question or want to collaborate on a project? Feel free to reach out!</p>
+                <div class="contact-methods">
+                    <a href="https://github.com/LYL8962" target="_blank" class="contact-method">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="mailto:your.email@example.com" class="contact-method">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </a>
+                    <a href="#" class="contact-method">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                    <a href="#" class="contact-method">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">&copy; 2026 LYL8962. All rights reserved.</p>
+            <p class="footer-subtext">Built with passion and JavaScript.</p>
+        </div>
+    </footer>
+
+    <!-- YouTube Player -->
+    <iframe id="youtubePlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <script src="script.js"></script>
+</body>
+</html>
