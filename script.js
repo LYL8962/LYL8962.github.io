@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let playerState = {
         isPlaying: false,
         isMuted: false,
-        videoId: 'jtL_OQZc5g4', // Default YouTube video ID
+        videoId: 'jtL_OQZc5g4',
         volume: 50
     };
 
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'disablekb': 1,
                 'showinfo': 0,
                 'autohide': 1,
-                'mute': 1
+                'mute': 0
             },
             events: {
                 'onReady': onPlayerReady,
@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         isPlayerReady = true;
+        console.log('YouTube player initialized');
     }
 
     function onPlayerReady(event) {
@@ -79,20 +80,17 @@ document.addEventListener('DOMContentLoaded', function() {
         updateMuteIcon();
         
         // Update song title
-        const songTitle = getSongTitle();
-        playerTitle.textContent = songTitle;
-        
-        // Preload the default video
-        player.cueVideoById(DEFAULT_VIDEO_ID);
+        setTimeout(() => {
+            updateSongTitle();
+        }, 1000);
         
         // Auto-play the song when player is ready
         setTimeout(() => {
+            console.log('Auto-playing music...');
             player.playVideo();
             playerState.isPlaying = true;
             updatePlayButton();
-            // Show the audio player
-            audioPlayer.classList.add('active');
-        }, 500);
+        }, 1000);
     }
 
     function onPlayerStateChange(event) {
@@ -102,10 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update song title when playing starts
         if (playerState.isPlaying) {
             setTimeout(() => {
-                const songTitle = getSongTitle();
-                if (songTitle && songTitle !== 'Loading...' && songTitle !== 'undefined') {
-                    playerTitle.textContent = songTitle;
-                }
+                updateSongTitle();
             }, 1000);
         }
     }
@@ -115,13 +110,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // =========================================
     
     // DOM Elements
-    const startMusicBtn = document.getElementById('startMusic');
-    const playPauseBtn = document.getElementById('playPause');
-    const muteBtn = document.getElementById('mute');
-    const audioPlayer = document.getElementById('audioPlayer');
+    const musicPlayerBtn = document.getElementById('musicPlayerBtn');
+    const muteBtn = document.getElementById('muteBtn');
     const progressSlider = document.getElementById('progressSlider');
     const progressFill = document.getElementById('progressFill');
-    const playerTitle = document.getElementById('playerTitle');
+    const playerTitle = document.querySelector('.player-title');
     const currentTimeEl = document.querySelector('.current-time');
     const durationEl = document.querySelector('.duration');
     
@@ -138,77 +131,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up callback for when API is ready
     window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
-    // Start music button click
-    startMusicBtn.addEventListener('click', function() {
-        if (typeof YT === 'undefined' || !YT.Player) {
-            alert('Loading YouTube player... Please wait a few seconds and try again.');
-            return;
+    // Update song title
+    function updateSongTitle() {
+        const title = getSongTitle();
+        if (title && title !== 'Loading...' && title !== 'undefined' && title !== '') {
+            playerTitle.textContent = title;
         }
-        
-        if (!isPlayerReady) {
-            alert('Player is initializing... Please wait...');
-            return;
-        }
-        
-        if (!playerState.isPlaying) {
-            // Play the music
-            player.unMute();
-            playerState.isMuted = false;
-            player.playVideo();
-        } else {
-            // Stop the music
-            player.pauseVideo();
-        }
-    });
+    }
 
-    // Play/Pause button
-    playPauseBtn.addEventListener('click', function() {
-        if (!isPlayerReady) return;
-        
-        if (playerState.isPlaying) {
-            player.pauseVideo();
-        } else {
-            player.playVideo();
-        }
-    });
-
-    // Mute/Unmute button
-    muteBtn.addEventListener('click', function() {
-        if (!isPlayerReady) return;
-        
-        if (playerState.isMuted) {
-            player.unMute();
-            playerState.isMuted = false;
-            player.setVolume(playerState.volume);
-        } else {
-            player.mute();
-            playerState.isMuted = true;
-        }
-        updateMuteIcon();
-    });
-
-    // Update play/pause icon
+    // Update play/pause button
     function updatePlayButton() {
-        const icon = playPauseBtn.querySelector('i');
+        const icon = musicPlayerBtn.querySelector('.fas');
+        const progressBar = musicPlayerBtn.querySelector('.progress-bar-container');
+        
         if (playerState.isPlaying) {
             icon.className = 'fas fa-pause';
-            startMusicBtn.querySelector('span').textContent = 'Stop Music';
-            startMusicBtn.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-            startMusicBtn.querySelector('i').className = 'fas fa-stop';
+            progressBar.style.display = 'block';
         } else {
             icon.className = 'fas fa-play';
-            startMusicBtn.querySelector('span').textContent = 'Start Music';
-            startMusicBtn.style.background = 'var(--primary-gradient)';
-            startMusicBtn.querySelector('i').className = 'fas fa-play';
         }
-        
-        // Update song title when it changes
-        setTimeout(() => {
-            const songTitle = getSongTitle();
-            if (songTitle && songTitle !== 'Loading...') {
-                playerTitle.textContent = songTitle;
-            }
-        }, 500);
     }
 
     // Update mute icon
@@ -219,6 +160,14 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             icon.className = 'fas fa-volume-up';
         }
+    }
+
+    // Format time (seconds to mm:ss)
+    function formatTime(seconds) {
+        if (!seconds || isNaN(seconds)) return '0:00';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
     }
 
     // Progress slider functionality
@@ -234,14 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update progress display
     function updateProgressFill(percentage) {
         progressFill.style.width = percentage + '%';
-    }
-
-    // Format time (seconds to mm:ss)
-    function formatTime(seconds) {
-        if (!seconds || isNaN(seconds)) return '0:00';
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
     }
 
     // Update progress during playback
@@ -265,6 +206,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Start progress updates
     onPlayerProgress();
+
+    // Music player button click - toggle play/pause
+    musicPlayerBtn.addEventListener('click', function(e) {
+        // Don't toggle if clicking on mute button or progress bar
+        if (e.target === muteBtn || e.target.closest('.progress-bar-container')) {
+            return;
+        }
+        
+        if (!isPlayerReady) {
+            alert('Player is initializing... Please wait...');
+            return;
+        }
+        
+        if (playerState.isPlaying) {
+            player.pauseVideo();
+        } else {
+            player.playVideo();
+        }
+    });
+
+    // Mute button
+    muteBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (!isPlayerReady) return;
+        
+        if (playerState.isMuted) {
+            player.unMute();
+            playerState.isMuted = false;
+            player.setVolume(playerState.volume);
+        } else {
+            player.mute();
+            playerState.isMuted = true;
+        }
+        updateMuteIcon();
+    });
 
     // =========================================
     // Navigation Scroll Effects
@@ -348,36 +324,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =========================================
-    // Custom YouTube Player Functions
-    // =========================================
-    
-    // Function to change YouTube track
-    window.changeYouTubeTrack = function(videoId) {
-        if (isPlayerReady) {
-            player.loadVideoById(videoId);
-            playerState.videoId = videoId;
-            player.playVideo();
-        }
-    };
-
-    // Function to play a YouTube URL
-    window.playYouTubeUrl = function(url) {
-        const videoId = extractYouTubeVideoId(url);
-        if (videoId) {
-            window.changeYouTubeTrack(videoId);
-        } else {
-            alert('Invalid YouTube URL. Please try again.');
-        }
-    };
-
-    // Helper function to extract YouTube video ID
-    function extractYouTubeVideoId(url) {
-        const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[7].length == 11) ? match[7] : false;
-    }
-
-    // =========================================
     // Initialize
     // =========================================
     
@@ -400,4 +346,35 @@ document.addEventListener('DOMContentLoaded', function() {
     sections.forEach(section => {
         observer.observe(section);
     });
+
+    // =========================================
+    // Custom YouTube Player Functions
+    // =========================================
+    
+    // Function to change YouTube track
+    window.changeYouTubeTrack = function(videoId) {
+        if (isPlayerReady) {
+            player.loadVideoById(videoId);
+            playerState.videoId = videoId;
+            player.playVideo();
+            updateSongTitle();
+        }
+    };
+
+    // Function to play a YouTube URL
+    window.playYouTubeUrl = function(url) {
+        const videoId = extractYouTubeVideoId(url);
+        if (videoId) {
+            window.changeYouTubeTrack(videoId);
+        } else {
+            alert('Invalid YouTube URL. Please try again.');
+        }
+    };
+
+    // Helper function to extract YouTube video ID
+    function extractYouTubeVideoId(url) {
+        const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[7].length == 11) ? match[7] : false;
+    }
 });
