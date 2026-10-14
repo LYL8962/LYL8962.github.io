@@ -84,13 +84,14 @@ document.addEventListener('DOMContentLoaded', function() {
             updateSongTitle();
         }, 1000);
         
-        // Auto-play the song when player is ready
-        setTimeout(() => {
-            console.log('Auto-playing music...');
-            player.playVideo();
-            playerState.isPlaying = true;
-            updatePlayButton();
-        }, 1000);
+    // Auto-play the song when player is ready
+    setTimeout(() => {
+        console.log('Auto-playing music...');
+        player.playVideo();
+        playerState.isPlaying = true;
+        updatePlayButton();
+        startProgressUpdates();  // Start progress updates
+    }, 1000);
     }
 
     function onPlayerStateChange(event) {
@@ -102,6 +103,27 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 updateSongTitle();
             }, 1000);
+        }
+    }
+    
+    // Update progress bar when playing
+    function updateProgressBar() {
+        if (!playerState.isPlaying) return;
+        
+        if (isPlayerReady && player.getCurrentTime && player.getDuration) {
+            const currentTime = player.getCurrentTime();
+            const duration = player.getDuration();
+            
+            if (duration > 0 && !isNaN(duration)) {
+                const percentage = (currentTime / duration) * 100;
+                progressSlider.value = percentage;
+                updateProgressFill(percentage);
+                
+                currentTimeEl.textContent = formatTime(currentTime);
+                durationEl.textContent = formatTime(duration);
+            }
+            
+            requestAnimationFrame(updateProgressBar);
         }
     }
 
@@ -147,8 +169,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (playerState.isPlaying) {
             icon.className = 'fas fa-pause';
             progressBar.style.display = 'block';
+            startProgressUpdates();  // Start progress updates
         } else {
             icon.className = 'fas fa-play';
+            stopProgressBar();  // Stop progress updates when paused
         }
     }
 
@@ -186,26 +210,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Update progress during playback
-    function onPlayerProgress() {
-        if (isPlayerReady && player.getCurrentTime && player.getDuration) {
-            const currentTime = player.getCurrentTime();
-            const duration = player.getDuration();
-            
-            if (duration > 0) {
-                const percentage = (currentTime / duration) * 100;
-                progressSlider.value = percentage;
-                updateProgressFill(percentage);
+    let progressInterval;
+    function updateProgressBar() {
+        if (playerState.isPlaying && isPlayerReady && player.getCurrentTime && player.getDuration) {
+            try {
+                const currentTime = player.getCurrentTime();
+                const duration = player.getDuration();
                 
-                currentTimeEl.textContent = formatTime(currentTime);
-                durationEl.textContent = formatTime(duration);
+                if (duration > 0 && !isNaN(duration) && !isNaN(currentTime)) {
+                    const percentage = (currentTime / duration) * 100;
+                    progressSlider.value = percentage;
+                    updateProgressFill(percentage);
+                    
+                    currentTimeEl.textContent = formatTime(currentTime);
+                    durationEl.textContent = formatTime(duration);
+                }
+            } catch (e) {
+                console.log('Error updating progress:', e);
             }
             
-            requestAnimationFrame(onPlayerProgress);
+            // Use requestAnimationFrame for smooth updates
+            progressInterval = requestAnimationFrame(updateProgressBar);
         }
     }
+    
+    // Cancel progress updates
+    function stopProgressBar() {
+        cancelAnimationFrame(progressInterval);
+    }
 
-    // Start progress updates
-    onPlayerProgress();
+    // Start progress updates when music starts
+    // Progress updates are handled in updatePlayButton when playing starts
+
+    // Update progress button
+    function startProgressUpdates() {
+        if (playerState.isPlaying) {
+            updateProgressBar();
+        }
+    }
 
     // Music player button click - toggle play/pause
     musicPlayerBtn.addEventListener('click', function(e) {

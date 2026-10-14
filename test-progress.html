@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Progress Bar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #0f172a;
+            color: white;
+        }
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #334155;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            width: 0%;
+            transition: width 0.1s;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .time-display {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Progress Bar Test</h1>
+    <p>This tests if the progress bar and time display work correctly.</p>
+    
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="testFill"></div>
+            <input type="range" id="testSlider" min="0" max="100" value="0" style="position: absolute; opacity: 0;">
+        </div>
+        <div class="time-display">
+            <span id="testCurrent">0:00</span> / <span id="testDuration">0:00</span>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button onclick="startTest()">Start Progress Test</button>
+        <button onclick="stopTest()">Stop Progress Test</button>
+        <button onclick="resetTest()">Reset</button>
+    </div>
+    
+    <div id="status" style="margin-top: 20px; padding: 10px; background: #1e293b; border-radius: 8px;">
+        Status: Ready
+    </div>
+
+    <script>
+        let testProgress = 0;
+        let testInterval;
+        const duration = 300; // 5 minutes in seconds
+        
+        function updateDisplay() {
+            testProgress += 0.1;
+            if (testProgress >= 100) testProgress = 0;
+            
+            document.getElementById('testFill').style.width = testProgress + '%';
+            document.getElementById('testSlider').value = testProgress;
+            
+            // Calculate simulated current time
+            const currentTime = (testProgress / 100) * duration;
+            const mins = Math.floor(currentTime / 60);
+            const secs = Math.floor(currentTime % 60);
+            document.getElementById('testCurrent').textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            document.getElementById('testDuration').textContent = `5:00`;
+            
+            document.getElementById('status').textContent = `Status: Progress at ${testProgress.toFixed(1)}%`;
+        }
+        
+        function startTest() {
+            if (testInterval) clearInterval(testInterval);
+            testInterval = setInterval(updateDisplay, 100);
+            document.getElementById('status').textContent = 'Status: Running...';
+        }
+        
+        function stopTest() {
+            clearInterval(testInterval);
+            document.getElementById('status').textContent = 'Status: Stopped';
+        }
+        
+        function resetTest() {
+            clearInterval(testInterval);
+            testProgress = 0;
+            updateDisplay();
+            document.getElementById('status').textContent = 'Status: Reset';
+        }
+        
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>
