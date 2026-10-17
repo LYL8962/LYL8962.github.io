@@ -497,24 +497,31 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('Music player button:', musicPlayerBtn);
     console.log('Music player menu:', musicPlayerMenu);
+    console.log('Toggle icon:', toggleIcon);
     
     if (musicPlayerBtn && musicPlayerMenu) {
         musicPlayerBtn.addEventListener('click', function(e) {
             e.stopPropagation();
+            console.log('Button clicked!');
+            console.log('Menu open before:', isMenuOpen);
             toggleMenu();
+            console.log('Menu open after:', isMenuOpen);
         });
     }
     
     function toggleMenu() {
-        console.log('Toggle menu clicked, menu open:', isMenuOpen);
+        console.log('Toggle menu function called');
         isMenuOpen = !isMenuOpen;
+        console.log('Is menu open:', isMenuOpen);
         
         if (isMenuOpen) {
+            console.log('Adding open class to menu');
             musicPlayerMenu.classList.add('open');
             toggleIcon.classList.remove('fa-chevron-up');
             toggleIcon.classList.add('fa-chevron-down');
             playMusicText.textContent = 'Music Playing';
         } else {
+            console.log('Removing open class from menu');
             musicPlayerMenu.classList.remove('open');
             toggleIcon.classList.remove('fa-chevron-down');
             toggleIcon.classList.add('fa-chevron-up');
