@@ -79,7 +79,7 @@ body {
     position: fixed;
     width: 600px;
     height: 600px;
-    background: linear-gradient(135deg, #facc15 0%, #fb923c 100%);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
     border-radius: 50%;
     opacity: 0.35;
     bottom: -200px;
@@ -795,7 +795,7 @@ section::after {
 
 .music-player-btn .btn-icon:hover {
     color: var(--primary-color);
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--shadow-light);
 }
 
 /* =========================================
