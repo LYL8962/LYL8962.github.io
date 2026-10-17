@@ -647,7 +647,9 @@ section {
 .music-player-btn .player-content {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
+    width: 100%;
 }
 
 .music-player-btn .player-icon {
