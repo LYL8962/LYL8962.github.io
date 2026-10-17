@@ -28,7 +28,7 @@
     
     /* Accent Colors */
     --primary-color: #ffa000;                /* Main accent color (Orange) */
-    --primary-gradient: linear-gradient(135deg, #ffa000 0%, #ff8c00 100%);  /* Main gradient */
+    --primary-gradient: linear-gradient(135deg, --primary-color 0%, #ff8c00 100%);  /* Main gradient */
     --secondary-color: #ffd700;              /* Secondary color (Gold) */
     
     /* Border Colors */
@@ -58,9 +58,9 @@
     --text-primary: #f5f5f4;
     --text-secondary: #a8a29e;
 
-    --primary-color: #ff7a1a;
-    --primary-gradient: linear-gradient(135deg, #ff7a1a 0%, #ffb347 100%);
-    --secondary-color: #ffd166;
+    --primary-color: #da6816;
+    --primary-gradient: linear-gradient(135deg, #da6816 0%, #e79d3c 100%);
+    --secondary-color: #e1ae47;
 
     --border-color: #2c2c31;
 
