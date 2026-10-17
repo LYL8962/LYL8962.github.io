@@ -62,7 +62,7 @@ body {
 
 .navbar .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 1rem 2rem;
 }
@@ -83,6 +83,7 @@ body {
     display: flex;
     list-style: none;
     gap: 2rem;
+    justify-content: center;
 }
 
 .nav-links a {
