@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set your default playlist URL here
     // The player will extract video IDs from this playlist
     // Example: 'https://www.youtube.com/playlist?list=PLxxxxxxxxxxxxxxx'
-    const DEFAULT_PLAYLIST_URL = '';  // Leave empty to use hardcoded playlist IDs below
+    const DEFAULT_PLAYLIST_URL = 'https://youtube.com/playlist?list=PLSHWNSkbahOm4vbLiqF2fBJ8xf1DPnSlc&si=mxgpt3ycvEyYzq4k';  // Leave empty to use hardcoded playlist IDs below
     
     // ================== PLAYLIST DATA ==================
     // Define your playlists here with YouTube video IDs
