@@ -75,10 +75,10 @@ body {
     position: absolute;
     left: 0;
     width: 100%;
-    height: 400px;
+    height: 600px;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.2;
+    opacity: 0.4;
 }
 
 .bg-band-1 {
@@ -87,13 +87,18 @@ body {
 }
 
 .bg-band-2 {
-    top: 60vh;
-    background: linear-gradient(to top, linear-gradient(135deg, #facc15 0%, #f97316 100%), transparent);
+    top: 55vh;
+    background: linear-gradient(to top, linear-gradient(135deg, #facc15 0%, #fb923c 100%), transparent);
 }
 
 .bg-band-3 {
-    top: 120vh;
-    background: linear-gradient(to bottom, linear-gradient(135deg, #6366f1 0%, #f97316 100%), transparent);
+    top: 110vh;
+    background: linear-gradient(to bottom, linear-gradient(135deg, #6366f1 0%, #fb923c 100%), transparent);
+}
+
+.bg-band-4 {
+    top: 165vh;
+    background: linear-gradient(to top, linear-gradient(135deg, #3b82f6 0%, #6366f1 100%), transparent);
 }
 
 .container {
