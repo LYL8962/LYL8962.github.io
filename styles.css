@@ -465,7 +465,6 @@ section {
    PROJECTS SECTION STYLES
    ========================================= */
 .projects-grid {
-.projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
@@ -645,19 +644,25 @@ section {
     transform: translateY(-3px);
 }
 
-.music-player-btn .fas {
-    font-size: 2rem;
-    color: var(--primary-color);
-    min-width: 40px;
-    text-align: center;
-    transition: var(--transition);
-}
-
 .music-player-btn .player-content {
     display: flex;
     align-items: center;
     gap: 1rem;
-    flex: 1;
+}
+
+.music-player-btn .player-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.music-player-btn .fas {
+    font-size: 2rem;
+    color: var(--primary-color);
+    transition: var(--transition);
 }
 
 .music-player-btn .player-info {
