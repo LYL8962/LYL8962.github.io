@@ -429,7 +429,7 @@ section::before {
 }
 
 .about-column {
-    background: rgba(30, 41, 59, 0.85);
+    background: rgba(10, 15, 26, 0.85);
     backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: 20px;
@@ -508,10 +508,10 @@ section::before {
 }
 
 /* =========================================
-   PROJECTS SECTION STYLES
-    ========================================= */
+   ABOUT SECTION STYLES
+   ========================================= */
 .about {
-    background: #0a0f1a;
+    background: transparent;
     padding: 8rem 0;
 }
 
@@ -598,9 +598,9 @@ section::before {
 
 /* =========================================
    CONTACT SECTION STYLES
-    ========================================= */
+   ========================================= */
 .contact {
-    background: #0a0f1a;
+    background: transparent;
 }
 
 .contact-content {
