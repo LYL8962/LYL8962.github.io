@@ -19,44 +19,44 @@
     <div class="bg-circle-1"></div>
     <div class="bg-circle-2"></div>
 
-    <!-- ================== MUSIC PLAYER BUTTON ================== -->
+    <!-- ================== MUSIC PLAYER ================== -->
     <!-- Don't delete this unless you want to remove the music player feature -->
-    <button class="music-player-btn" id="musicPlayerBtn">
-        <div class="player-toggle-icon">
-            <i class="fas fa-chevron-up"></i>
-        </div>
-        <span class="play-music-text">Play Music</span>
-    </button>
-    
-    <!-- Music Player Menu (Hidden by default) -->
-    <div class="music-player-menu" id="musicPlayerMenu">
-        <div class="player-menu-content">
-            <span class="player-title">Loading Song...</span>
-            <div class="progress-bar-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                    <input type="range" id="progressSlider" class="progress-slider" min="0" max="100" value="0">
-                </div>
-                <div class="player-time">
-                    <span class="current-time">0:00</span> / <span class="duration">0:00</span>
-                </div>
+    <div class="music-player" id="musicPlayer">
+        <!-- Collapsed state (button) -->
+        <div class="music-player-collapsed" id="musicPlayerBtn">
+            <div class="player-toggle-icon">
+                <i class="fas fa-chevron-up"></i>
             </div>
-            <div class="player-controls">
-                <button class="btn-icon" id="rewindBtn" aria-label="Rewind">
-                    <i class="fas fa-backward"></i>
-                </button>
-                <button class="btn-icon" id="playPauseBtn" aria-label="Play/Pause">
-                    <i class="fas fa-play"></i>
-                </button>
-                <button class="btn-icon" id="forwardBtn" aria-label="Forward">
-                    <i class="fas fa-forward"></i>
-                </button>
+            <span class="play-music-text">Play Music</span>
+        </div>
+        
+        <!-- Expanded state (menu) -->
+        <div class="music-player-expanded" id="musicPlayerMenu">
+            <div class="player-menu-content">
+                <span class="player-title">Loading Song...</span>
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                        <input type="range" id="progressSlider" class="progress-slider" min="0" max="100" value="0">
+                    </div>
+                    <div class="player-time">
+                        <span class="current-time">0:00</span> / <span class="duration">0:00</span>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <button class="btn-icon" id="rewindBtn" aria-label="Rewind">
+                        <i class="fas fa-backward"></i>
+                    </button>
+                    <button class="btn-icon" id="playPauseBtn" aria-label="Play/Pause">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="btn-icon" id="forwardBtn" aria-label="Forward">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-    
-    <!-- Debug button to test menu -->
-    <button onclick="document.getElementById('musicPlayerMenu').classList.toggle('open')" style="position: fixed; bottom: 10px; left: 10px; padding: 10px; z-index: 9999;">Test Menu</button>
 
     <!-- ================== NAVIGATION BAR ================== -->
     <!-- Change your username in the logo (line 43) -->

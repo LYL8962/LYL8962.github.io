@@ -152,9 +152,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // =========================================
     
     // ================== DOM ELEMENTS ==================
-    // Music player button and menu
+    // Music player elements
+    const musicPlayer = document.getElementById('musicPlayer');
     const musicPlayerBtn = document.getElementById('musicPlayerBtn');
-    const musicPlayerMenu = document.getElementById('musicPlayerMenu');
+    const musicPlayerExpanded = document.getElementById('musicPlayerMenu');
     const playMusicText = document.querySelector('.play-music-text');
     const toggleIcon = document.querySelector('.player-toggle-icon i');
     
@@ -502,27 +503,24 @@ document.addEventListener('DOMContentLoaded', function() {
     if (musicPlayerBtn && musicPlayerMenu) {
         musicPlayerBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            console.log('Button clicked!');
-            console.log('Menu open before:', isMenuOpen);
             toggleMenu();
-            console.log('Menu open after:', isMenuOpen);
         });
     }
     
     function toggleMenu() {
-        console.log('Toggle menu function called');
         isMenuOpen = !isMenuOpen;
-        console.log('Is menu open:', isMenuOpen);
         
         if (isMenuOpen) {
-            console.log('Adding open class to menu');
-            musicPlayerMenu.classList.add('open');
+            // Expand the button into the menu
+            musicPlayerBtn.style.display = 'none';
+            musicPlayerExpanded.classList.add('open');
             toggleIcon.classList.remove('fa-chevron-up');
             toggleIcon.classList.add('fa-chevron-down');
             playMusicText.textContent = 'Music Playing';
         } else {
-            console.log('Removing open class from menu');
-            musicPlayerMenu.classList.remove('open');
+            // Collapse the menu back into the button
+            musicPlayerExpanded.classList.remove('open');
+            musicPlayerBtn.style.display = 'flex';
             toggleIcon.classList.remove('fa-chevron-down');
             toggleIcon.classList.add('fa-chevron-up');
             playMusicText.textContent = 'Play Music';
@@ -531,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (isMenuOpen && !musicPlayerBtn.contains(e.target) && !musicPlayerMenu.contains(e.target)) {
+        if (isMenuOpen && !musicPlayerBtn.contains(e.target) && !musicPlayerExpanded.contains(e.target)) {
             toggleMenu();
         }
     });
