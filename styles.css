@@ -372,12 +372,12 @@ section::before {
 }
 
 section {
-    padding: 8rem 0;
+    padding: 8rem 2rem;
     position: relative;
     z-index: 1;
-    border: 2px solid var(--border-color);
+    border: 5px solid var(--border-color);
     border-radius: 30px;
-    margin: 2rem 0;
+    margin: 5rem 5rem;
 }
 
 /* Subtle gradient overlay for each section */
