@@ -24,6 +24,7 @@
     --text-secondary: #94a3b8;             /* CHANGE ME: Secondary text color */
     --border-color: #334155;               /* CHANGE ME: Border color */
     --card-bg: #0f172a;                    /* CHANGE ME: Card background color */
+    --section-tint: rgba(255, 165, 0, 0.3); /* CHANGE ME: Section background tint */
     --transition: all 0.3s ease;           /* Animation timing */
 }
 
@@ -159,7 +160,7 @@ body {
     position: relative;
     padding-top: 80px;
     overflow: visible;
-    background: rgba(255, 165, 0, 0.3);
+    background: var(--section-tint);
 }
 
 .hero-content {
@@ -387,7 +388,7 @@ section::after {
 }
 
 .about-column {
-    background: rgba(10, 15, 26, 0.85);
+    background: rgba(255, 165, 0, 0.15);
     backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: 20px;
@@ -449,9 +450,9 @@ section::after {
 
 /* =========================================
    ABOUT SECTION STYLES
-   ========================================= */
+    ========================================= */
 .about {
-    background: rgba(31, 15, 5, 0.6);
+    background: var(--section-tint);
 }
 
 /* =========================================
@@ -537,9 +538,9 @@ section::after {
 
 /* =========================================
    CONTACT SECTION STYLES
-   ========================================= */
+    ========================================= */
 .contact {
-    background: rgba(31, 15, 5, 0.6);
+    background: var(--section-tint);
 }
 
 .contact-content {
