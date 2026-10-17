@@ -67,6 +67,11 @@ body {
     padding: 1rem 2rem;
 }
 
+.logo {
+    position: absolute;
+    left: 2rem;
+}
+
 .logo a {
     font-family: 'JetBrains Mono', monospace;
     font-size: 1.5rem;
@@ -327,54 +332,139 @@ section {
 }
 
 /* =========================================
-   ABOUT SECTION STYLES
+   ABOUT SECTION 3-COLUMN LAYOUT STYLES
    ========================================= */
-.about {
-    background: var(--surface-color);
-}
-
 .about-content {
-    max-width: 800px;
+    position: relative;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
-.about-text {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    line-height: 1.8;
+.about-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
 }
 
-.about-text p {
+.about-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+}
+
+.about-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--surface-color) 0%, rgba(15, 23, 42, 0.95) 100%);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.about-column {
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-column:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.about-column::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-gradient);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.about-column:hover::before {
+    opacity: 1;
+}
+
+.about-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--primary-gradient);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 25px rgba(249, 115, 22, 0.3);
+}
+
+.about-icon i {
+    font-size: 2.5rem;
+    color: white;
+}
+
+.about-column-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.about-column-desc {
+    color: var(--text-secondary);
+    line-height: 1.7;
     margin-bottom: 1.5rem;
 }
 
-.interests-list {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin: 2rem 0;
-}
-
-.interests-list li {
+.about-interests {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     gap: 0.75rem;
-    color: var(--text-secondary);
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
 }
 
-.interests-list li i {
+.interest-tag {
+    padding: 0.5rem 1rem;
+    background: rgba(249, 115, 22, 0.15);
     color: var(--primary-color);
-    font-size: 1.2rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* =========================================
+   PROJECTS SECTION STYLES
+    ========================================= */
+.about {
+    background: var(--surface-color);
+    padding: 8rem 0;
 }
 
 /* =========================================
    PROJECTS SECTION STYLES
    ========================================= */
+.projects-grid {
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -700,6 +790,10 @@ section {
 
     .projects-grid {
         grid-template-columns: 1fr;  /* Stack projects on mobile */
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;  /* Stack about columns on mobile */
     }
 
     .contact-methods {
