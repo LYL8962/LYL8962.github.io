@@ -120,31 +120,18 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 updateSongTitle();
             }, 1000);
+            // Start progress updates
+            startProgressUpdates();
         }
     }
     
-    // ================== UPDATE PROGRESS BAR ==================
-    // Updates the progress bar position while playing
-    function updateProgressBar() {
-        if (!playerState.isPlaying) return;
-        
-        if (isPlayerReady && player.getCurrentTime && player.getDuration) {
-            const currentTime = player.getCurrentTime();
-            const duration = player.getDuration();
-            
-            if (duration > 0 && !isNaN(duration)) {
-                const percentage = (currentTime / duration) * 100;
-                progressSlider.value = percentage;
-                updateProgressFill(percentage);
-                
-                currentTimeEl.textContent = formatTime(currentTime);
-                durationEl.textContent = formatTime(duration);
-            }
-            
-            requestAnimationFrame(updateProgressBar);
+    // Start progress updates when music starts
+    function startProgressUpdates() {
+        if (playerState.isPlaying) {
+            updateProgressBar();
         }
     }
-
+    
     // =========================================
     // UI FUNCTIONS
     // =========================================
@@ -260,33 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function stopProgressBar() {
         cancelAnimationFrame(progressInterval);
     }
-
-    // ================== START PROGRESS UPDATES ==================
-    function startProgressUpdates() {
-        if (playerState.isPlaying) {
-            updateProgressBar();
-        }
-    }
-
-    // ================== MUSIC PLAYER BUTTON CLICK ==================
-    // Toggle play/pause when clicking the music player button
-    musicPlayerBtn.addEventListener('click', function(e) {
-        // Don't toggle if clicking on progress bar
-        if (e.target.closest('.progress-bar-container')) {
-            return;
-        }
-         
-        if (!isPlayerReady) {
-            alert('Player is initializing... Please wait...');
-            return;
-        }
-        
-        if (playerState.isPlaying) {
-            player.pauseVideo();
-        } else {
-            player.playVideo();
-        }
-    });
 
     // =========================================
     // NAVIGATION SCROLL EFFECTS
@@ -459,10 +419,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let isMenuOpen = false;
     
     console.log('Music player button:', musicPlayerBtn);
-    console.log('Music player menu:', musicPlayerMenu);
+    console.log('Music player expanded:', musicPlayerExpanded);
     console.log('Toggle icon:', toggleIcon);
     
-    if (musicPlayerBtn && musicPlayerMenu) {
+    if (musicPlayerBtn && musicPlayerExpanded) {
         musicPlayerBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             toggleMenu();
@@ -479,6 +439,8 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleIcon.classList.remove('fa-chevron-up');
             toggleIcon.classList.add('fa-chevron-down');
             playMusicText.textContent = 'Music Playing';
+            // Stop progress updates when menu is opened
+            stopProgressBar();
         } else {
             // Collapse the menu back into the button
             musicPlayerExpanded.classList.remove('open');
@@ -486,6 +448,8 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleIcon.classList.remove('fa-chevron-down');
             toggleIcon.classList.add('fa-chevron-up');
             playMusicText.textContent = 'Play Music';
+            // Stop progress updates when menu is closed
+            stopProgressBar();
         }
     }
     
