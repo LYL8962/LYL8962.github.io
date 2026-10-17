@@ -30,10 +30,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // This is used if playerState.videoId doesn't work
     const DEFAULT_VIDEO_ID = 'jtL_OQZc5g4';  // CHANGE THIS to your preferred YouTube video ID
     
+    // ================== PLAYLIST SETTINGS ==================
+    // Set your default playlist URL here
+    // The player will extract video IDs from this playlist
+    // Example: 'https://www.youtube.com/playlist?list=PLxxxxxxxxxxxxxxx'
+    const DEFAULT_PLAYLIST_URL = '';  // Leave empty to use hardcoded playlist IDs below
+    
     // ================== PLAYLIST DATA ==================
     // Define your playlists here with YouTube video IDs
     // Replace the video IDs below with your actual YouTube video IDs
     // Get YouTube video IDs from: https://www.youtube.com/watch?v=VIDEO_ID_HERE
+    // These are used if DEFAULT_PLAYLIST_URL is empty
     const playlists = {
         'Chill Vibes': [
             '3JZ_D3ELwOQ', '2zNSgSzhBfM', 'K63rlQV8WVE', '7Gld1t3p1qY', '1a2b3c4d5e6',
@@ -54,6 +61,102 @@ document.addEventListener('DOMContentLoaded', function() {
     let playedIndices = [];
     let currentSongIndex = -1;
     let defaultSongPlayed = false;
+    
+    // Menu state
+    let isMenuOpen = false;
+    
+    // ================== EXTRACT PLAYLIST VIDEOS FUNCTION ==================
+    // Function to extract video IDs from a YouTube playlist URL
+    // Usage: window.extractPlaylistVideos('https://youtube.com/playlist?list=PLAYLIST_ID')
+    // Note: Requires YouTube Data API key to fetch actual video IDs
+    // Get API key from: https://console.cloud.google.com/
+    window.extractPlaylistVideos = async function(playlistUrl) {
+        try {
+            // Extract playlist ID from URL
+            const playlistIdMatch = playlistUrl.match(/list=([a-zA-Z0-9_-]+)/);
+            if (!playlistIdMatch) {
+                alert('Invalid YouTube playlist URL');
+                return [];
+            }
+            const playlistId = playlistIdMatch[1];
+            
+            const apiKey = 'YOUR_YOUTUBE_API_KEY'; // Replace with your actual API key
+            
+            if (apiKey === 'YOUR_YOUTUBE_API_KEY') {
+                console.warn('YouTube API key not set. Returning playlist ID only.');
+                return { playlistId: playlistId, videoIds: [] };
+            }
+            
+            const videoIds = [];
+            let nextPageToken = null;
+            
+            do {
+                const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${playlistId}&maxResults=50&key=${apiKey}${nextPageToken ? '&pageToken=' + nextPageToken : ''}`;
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                if (data.error) {
+                    console.error('YouTube API error:', data.error);
+                    return [];
+                }
+                
+                data.items.forEach(item => {
+                    const videoId = item.contentDetails.videoId;
+                    if (videoId) {
+                        videoIds.push(videoId);
+                    }
+                });
+                
+                nextPageToken = data.nextPageToken;
+            } while (nextPageToken);
+            
+            return videoIds;
+        } catch (error) {
+            console.error('Error extracting playlist videos:', error);
+            return [];
+        }
+    };
+    
+    // Initialize playlists - fetch from URL if provided, otherwise use hardcoded data
+    async function initializePlaylists() {
+        if (DEFAULT_PLAYLIST_URL && DEFAULT_PLAYLIST_URL.trim() !== '') {
+            console.log('Fetching playlist from URL:', DEFAULT_PLAYLIST_URL);
+            try {
+                // Extract video IDs from the playlist URL
+                const result = await window.extractPlaylistVideos(DEFAULT_PLAYLIST_URL);
+                
+                if (result.playlistId && result.videoIds && result.videoIds.length > 0) {
+                    // Create a new playlist with the fetched videos
+                    const playlistName = 'My Playlist';
+                    playlists[playlistName] = result.videoIds;
+                    currentPlaylistName = playlistName;
+                    
+                    // Update the dropdown
+                    const selector = document.getElementById('playlistSelector');
+                    if (selector) {
+                        // Check if option already exists
+                        let option = selector.querySelector(`option[value="${playlistName}"]`);
+                        if (!option) {
+                            option = document.createElement('option');
+                            option.value = playlistName;
+                            option.textContent = playlistName;
+                            selector.appendChild(option);
+                        }
+                        selector.value = playlistName;
+                    }
+                    
+                    console.log(`Loaded ${result.videoIds.length} videos from playlist`);
+                    return;
+                }
+            } catch (error) {
+                console.error('Error fetching playlist:', error);
+            }
+        }
+        
+        // Use default playlist if URL extraction failed or not provided
+        console.log('Using hardcoded playlists');
+    }
     
     // ================== GET SONG TITLE FUNCTION ==================
     // This function fetches and displays the YouTube video title
@@ -81,6 +184,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================== YOUTUBE PLAYER ERROR HANDLER ==================
     function onPlayerError(error) {
         console.error('YouTube player error:', error);
+        
+        // Try to skip to the next song on error
+        if (error === 100 || error === 150) {
+            // Video not found or private - skip to next
+            playNextSong();
+            return;
+        }
+        
         // Show error message
         if (playerTitle) {
             playerTitle.textContent = 'Player Error - Check Console';
@@ -118,8 +229,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        isPlayerReady = true;
         console.log('YouTube player initialized');
+        
+        // Initialize playlists from URL if provided
+        initializePlaylists();
     }
 
     // ================== ON PLAYER READY ==================
@@ -183,6 +296,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const musicPlayerExpanded = document.getElementById('musicPlayerMenu');
     const playMusicText = document.querySelector('.play-music-text');
     const toggleIcon = document.querySelector('.player-toggle-icon i');
+    
+    // Playlist selector
+    const playlistSelectorElem = document.getElementById('playlistSelector');
+    
+    // Player controls
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const rewindBtn = document.getElementById('rewindBtn');
+    const forwardBtn = document.getElementById('forwardBtn');
     
     // Progress
     const progressSlider = document.getElementById('progressSlider');
@@ -390,9 +511,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Playlist selector change handler
-    const playlistSelector = document.getElementById('playlistSelector');
-    if (playlistSelector) {
-        playlistSelector.addEventListener('change', function(e) {
+    if (playlistSelectorElem) {
+        playlistSelectorElem.addEventListener('change', function(e) {
             const selectedPlaylist = e.target.value;
             switchPlaylist(selectedPlaylist);
         });
@@ -581,9 +701,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // =========================================
     // MUSIC PLAYER MENU TOGGLE
-    // =========================================
-    let isMenuOpen = false;
-    
+    // =========================================    
     console.log('Music player button:', musicPlayerBtn);
     console.log('Music player expanded:', musicPlayerExpanded);
     console.log('Toggle icon:', toggleIcon);
