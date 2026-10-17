@@ -33,7 +33,7 @@ html {
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1a1005 50%, #0f172a 100%);
+    background: linear-gradient(135deg, #0a0f1f 0%, #1f1000 50%, #0a0f1f 100%);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
@@ -189,7 +189,7 @@ body {
     position: relative;
     padding-top: 80px;
     overflow: visible;
-    background: rgba(26, 15, 5, 0.3);
+    background: rgba(31, 15, 5, 0.3);
 }
 
 .hero-content {
@@ -479,9 +479,9 @@ section::after {
 
 /* =========================================
    ABOUT SECTION STYLES
-    ========================================= */
+   ========================================= */
 .about {
-    background: rgba(26, 15, 5, 0.5);
+    background: rgba(31, 15, 5, 0.6);
 }
 
 /* =========================================
@@ -567,9 +567,9 @@ section::after {
 
 /* =========================================
    CONTACT SECTION STYLES
-    ========================================= */
+   ========================================= */
 .contact {
-    background: rgba(26, 15, 5, 0.5);
+    background: rgba(31, 15, 5, 0.6);
 }
 
 .contact-content {
