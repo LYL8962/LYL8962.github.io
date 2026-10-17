@@ -152,9 +152,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // =========================================
     
     // ================== DOM ELEMENTS ==================
-    // These are references to HTML elements used by JavaScript
+    // Music player button and menu
     const musicPlayerBtn = document.getElementById('musicPlayerBtn');
-    const muteBtn = document.getElementById('muteBtn');
+    const musicPlayerMenu = document.getElementById('musicPlayerMenu');
+    const playMusicText = document.querySelector('.play-music-text');
+    const toggleIcon = document.querySelector('.player-toggle-icon i');
+    
+    // Player controls
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const rewindBtn = document.getElementById('rewindBtn');
+    const forwardBtn = document.getElementById('forwardBtn');
+    
+    // Progress
     const progressSlider = document.getElementById('progressSlider');
     const progressFill = document.getElementById('progressFill');
     const playerTitle = document.querySelector('.player-title');
@@ -186,16 +195,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================== UPDATE PLAY/PAUSE BUTTON ==================
     // Changes play icon to pause icon and vice versa
     function updatePlayButton() {
-        const icon = musicPlayerBtn.querySelector('.fas');
-        const progressBar = musicPlayerBtn.querySelector('.progress-bar-container');
-        
+        // Update menu button
+        const menuIcon = playPauseBtn.querySelector('.fas');
         if (playerState.isPlaying) {
-            icon.className = 'fas fa-pause';
-            progressBar.style.display = 'block';
-            startProgressUpdates();  // Start progress updates
+            menuIcon.className = 'fas fa-pause';
         } else {
-            icon.className = 'fas fa-play';
-            stopProgressBar();  // Stop progress updates when paused
+            menuIcon.className = 'fas fa-play';
         }
     }
 
@@ -389,8 +394,44 @@ document.addEventListener('DOMContentLoaded', function() {
         // M key toggles mute
         if (e.code === 'KeyM') {
             if (isPlayerReady) {
-                muteBtn.click();
+                // Mute functionality can be added later if needed
+                console.log('Mute shortcut - to be implemented');
             }
+        }
+    });
+
+    // =========================================
+    // MENU BUTTON HANDLERS
+    // =========================================
+    
+    // Play/Pause button in menu
+    playPauseBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (!isPlayerReady) return;
+        
+        if (playerState.isPlaying) {
+            player.pauseVideo();
+        } else {
+            player.playVideo();
+        }
+    });
+    
+    // Rewind button (10 seconds back)
+    rewindBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (isPlayerReady && player.getCurrentTime) {
+            const currentTime = player.getCurrentTime();
+            player.seekTo(Math.max(0, currentTime - 10), true);
+        }
+    });
+    
+    // Forward button (10 seconds forward)
+    forwardBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (isPlayerReady && player.getCurrentTime && player.getDuration) {
+            const currentTime = player.getCurrentTime();
+            const duration = player.getDuration();
+            player.seekTo(Math.min(duration, currentTime + 10), true);
         }
     });
 
@@ -448,4 +489,37 @@ document.addEventListener('DOMContentLoaded', function() {
         const match = url.match(regExp);
         return (match && match[7].length == 11) ? match[7] : false;
     }
+    
+    // =========================================
+    // MUSIC PLAYER MENU TOGGLE
+    // =========================================
+    let isMenuOpen = false;
+    
+    musicPlayerBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
+    
+    function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
+        
+        if (isMenuOpen) {
+            musicPlayerMenu.classList.add('open');
+            toggleIcon.classList.remove('fa-chevron-up');
+            toggleIcon.classList.add('fa-chevron-down');
+            playMusicText.textContent = 'Music Playing';
+        } else {
+            musicPlayerMenu.classList.remove('open');
+            toggleIcon.classList.remove('fa-chevron-down');
+            toggleIcon.classList.add('fa-chevron-up');
+            playMusicText.textContent = 'Play Music';
+        }
+    }
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (isMenuOpen && !musicPlayerBtn.contains(e.target) && !musicPlayerMenu.contains(e.target)) {
+            toggleMenu();
+        }
+    });
 });
