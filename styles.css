@@ -511,7 +511,7 @@ section::after {
    PROJECTS SECTION STYLES
    ========================================= */
 .projects {
-    background: var(--section-tint);
+    background: var(--bg-color);
 }
 
 .projects-grid {
