@@ -375,7 +375,7 @@ section {
     padding: 8rem 2rem;
     position: relative;
     z-index: 1;
-    border: 5px solid var(--border-color);
+    border: 5px solid rgba(51, 65, 85, 0.5);
     border-radius: 30px;
     margin: 5rem 5rem;
 }
@@ -560,7 +560,7 @@ section::before {
 
 .contact-content {
     text-align: center;
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -581,6 +581,7 @@ section::before {
 .contact-method {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
     padding: 1.5rem 2rem;
     background: rgba(255, 255, 255, 0.03);
@@ -589,7 +590,7 @@ section::before {
     color: var(--text-primary);
     text-decoration: none;
     transition: var(--transition);
-    width: 140px;
+    width: 160px;
 }
 
 .contact-method:hover {
