@@ -690,7 +690,7 @@ section::after {
     gap: 0.5rem;
     box-shadow: 0 10px 30px var(--shadow-dark);
     transition: var(--transition);
-    width: 140px;
+    width: 160px;
 }
 
 .music-player-collapsed:hover {

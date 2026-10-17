@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get YouTube video IDs from: https://www.youtube.com/watch?v=VIDEO_ID_HERE
     let playerState = {
         isPlaying: false,
-        isMuted: false,
         videoId: 'jtL_OQZc5g4',  // CHANGE THIS to your preferred YouTube video ID
         volume: 50                // Default volume (0-100)
     };
@@ -93,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function onPlayerReady(event) {
         console.log('Player is ready');
         player.setVolume(playerState.volume);
-        updateMuteIcon();
         
         // Update song title after a short delay
         setTimeout(() => {
@@ -205,17 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ================== UPDATE MUTE ICON ==================
-    // Changes mute/unmute icon based on current state
-    function updateMuteIcon() {
-        const icon = muteBtn.querySelector('i');
-        if (playerState.isMuted) {
-            icon.className = 'fas fa-volume-mute';
-        } else {
-            icon.className = 'fas fa-volume-up';
-        }
-    }
-
     // ================== FORMAT TIME ==================
     // Converts seconds to MM:SS format
     function formatTime(seconds) {
@@ -284,11 +271,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================== MUSIC PLAYER BUTTON CLICK ==================
     // Toggle play/pause when clicking the music player button
     musicPlayerBtn.addEventListener('click', function(e) {
-        // Don't toggle if clicking on mute button or progress bar
-        if (e.target === muteBtn || e.target.closest('.progress-bar-container')) {
+        // Don't toggle if clicking on progress bar
+        if (e.target.closest('.progress-bar-container')) {
             return;
         }
-        
+         
         if (!isPlayerReady) {
             alert('Player is initializing... Please wait...');
             return;
@@ -299,23 +286,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             player.playVideo();
         }
-    });
-
-    // ================== MUTE BUTTON CLICK ==================
-    // Toggle mute/unmute when clicking the mute button
-    muteBtn.addEventListener('click', function(e) {
-        e.stopPropagation();  // Prevent triggering play/pause
-        if (!isPlayerReady) return;
-        
-        if (playerState.isMuted) {
-            player.unMute();
-            playerState.isMuted = false;
-            player.setVolume(playerState.volume);
-        } else {
-            player.mute();
-            playerState.isMuted = true;
-        }
-        updateMuteIcon();
     });
 
     // =========================================
@@ -389,14 +359,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     player.playVideo();
                 }
-            }
-        }
-        
-        // M key toggles mute
-        if (e.code === 'KeyM') {
-            if (isPlayerReady) {
-                // Mute functionality can be added later if needed
-                console.log('Mute shortcut - to be implemented');
             }
         }
     });
