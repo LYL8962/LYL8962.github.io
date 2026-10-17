@@ -18,13 +18,13 @@
     --primary-color: #ffa000;              /* CHANGE ME: Main accent color (Orange) */
     --primary-gradient: linear-gradient(135deg, #f97316 0%, #fb923c 100%);  /* Main gradient */
     --secondary-color: #facc15;            /* CHANGE ME: Secondary color (Yellow) */
-    --background-color: #0f172a;           /* CHANGE ME: Background color (Dark blue) */
+    --background-color: #0a0805;           /* CHANGE ME: Background color (Very dark orange) */
     --surface-color: #1e293b;              /* CHANGE ME: Cards/surfaces color */
     --text-primary: #f8fafc;               /* CHANGE ME: Main text color */
     --text-secondary: #94a3b8;             /* CHANGE ME: Secondary text color */
     --border-color: #334155;               /* CHANGE ME: Border color */
     --card-bg: #0f172a;                    /* CHANGE ME: Card background color */
-    --section-tint: rgba(255, 165, 0, 0.3); /* CHANGE ME: Section background tint */
+    --section-tint: rgba(20, 12, 0, 0.6); /* CHANGE ME: Section background tint - darker orange */
     --transition: all 0.3s ease;           /* Animation timing */
 }
 
@@ -34,7 +34,7 @@ html {
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background:linear-gradient(to right, #2b1100, #6b2400, #b34700);
+    background: var(--background-color);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
@@ -458,6 +458,10 @@ section::after {
 /* =========================================
    PROJECTS SECTION STYLES
    ========================================= */
+.projects {
+    background: var(--section-tint);
+}
+
 .projects-grid {
     display: grid;
     grid-template-columns: 1fr;
