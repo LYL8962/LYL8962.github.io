@@ -375,6 +375,9 @@ section {
     padding: 8rem 0;
     position: relative;
     z-index: 1;
+    border: 2px solid var(--border-color);
+    border-radius: 30px;
+    margin: 2rem 0;
 }
 
 /* Subtle gradient overlay for each section */
@@ -517,7 +520,6 @@ section::before {
    ========================================= */
 .about {
     background: transparent;
-    padding: 8rem 0;
 }
 
 /* =========================================
