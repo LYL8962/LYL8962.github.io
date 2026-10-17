@@ -765,7 +765,7 @@ section {
 .music-player-btn .btn-icon {
     background: transparent;
     border: none;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 50%;
