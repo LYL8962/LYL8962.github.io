@@ -326,10 +326,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Changes navbar style when user scrolls down
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
-            navBar.style.background = 'rgba(15, 23, 42, 0.95)';
+            navBar.style.background = 'rgba(10, 8, 5, 0.95)';
             navBar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
         } else {
-            navBar.style.background = 'rgba(15, 23, 42, 0.8)';
+            navBar.style.background = 'rgba(10, 8, 5, 0.8)';
             navBar.style.boxShadow = 'none';
         }
     });
