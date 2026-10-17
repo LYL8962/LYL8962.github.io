@@ -757,11 +757,6 @@ section::after {
     gap: 1rem;
 }
 
-.player-menu-content .playlist-selector-container {
-    width: 100%;
-    margin-bottom: 0.5rem;
-}
-
 .player-menu-content .playlist-selector {
     width: 100%;
     padding: 0.75rem;
@@ -778,6 +773,7 @@ section::after {
     background-position: right 0.75rem center;
     background-size: 12px;
     font-family: 'Inter', sans-serif;
+    margin-bottom: 0.5rem;
 }
 
 .player-menu-content .playlist-selector:hover {

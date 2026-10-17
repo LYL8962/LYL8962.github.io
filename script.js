@@ -36,13 +36,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get YouTube video IDs from: https://www.youtube.com/watch?v=VIDEO_ID_HERE
     const playlists = {
         'Chill Vibes': [
-            'jtL_OQZc5g4', 'a1b2c3d4e5f', 'f5e4d3c2b1a', 'z9y8x7w6v5u', 't4s3r2q1p0o'
+            '3JZ_D3ELwOQ', '2zNSgSzhBfM', 'K63rlQV8WVE', '7Gld1t3p1qY', '1a2b3c4d5e6',
+            'f5e4d3c2b1a', 'z9y8x7w6v5u', 't4s3r2q1p0o', 'n9m8l7k6j5i', 'h4g3f2e1d0c'
         ],
         'LoFi Beats': [
-            'jWfXkZa1BcD', 'eFgHiJkLmNo', 'pQrStUvWxYz', '1a2b3c4d5e6', '7f8g9h0i1j2'
+            'jWfXkZa1BcD', 'eFgHiJkLmNo', 'pQrStUvWxYz', '1a2b3c4d5e6', '7f8g9h0i1j2',
+            'KlMnOpQrStU', 'VwXyZ123456', 'AbCdEfGhIjK', 'LmNoPqRsTuV', 'WxYz0123456'
         ],
         'Focus Music': [
-            'KlMnOpQrStU', 'VwXyZ123456', 'AbCdEfGhIjK', 'LmNoPqRsTuV', 'WxYz0123456'
+            '5yFzQJvW0aI', '3JZ_D3ELwOQ', '2zNSgSzhBfM', 'K63rlQV8WVE', '7Gld1t3p1qY',
+            'n9m8l7k6j5i', 'h4g3f2e1d0c', 'b9a8z7y6x5w', 'v4u3t2s1r0q', 'p9o8n7m6l5k'
         ]
     };
     
@@ -75,6 +78,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
     }
 
+    // ================== YOUTUBE PLAYER ERROR HANDLER ==================
+    function onPlayerError(error) {
+        console.error('YouTube player error:', error);
+        // Show error message
+        if (playerTitle) {
+            playerTitle.textContent = 'Player Error - Check Console';
+        }
+    }
+
     // ================== INITIALIZE YOUTUBE IFRAME API ==================
     // This creates the YouTube player when the API is ready
     function onYouTubeIframeAPIReady() {
@@ -101,7 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             events: {
                 'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
+                'onStateChange': onPlayerStateChange,
+                'onError': onPlayerError
             }
         });
         
@@ -144,15 +157,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Auto-play next song when current video ends
         if (event.data === YT.PlayerState.ENDED) {
-            // Only auto-play next if we're playing the default song or in playlist mode
-            if (!isMenuOpen) {
-                playNextSong();
-            }
+            playNextSong();
         }
     }
     
     // Start progress updates when music starts
     function startProgressUpdates() {
+        // Cancel any existing progress interval first to prevent duplicates
+        if (progressInterval) {
+            cancelAnimationFrame(progressInterval);
+        }
         if (playerState.isPlaying) {
             updateProgressBar();
         }
@@ -169,14 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const musicPlayerExpanded = document.getElementById('musicPlayerMenu');
     const playMusicText = document.querySelector('.play-music-text');
     const toggleIcon = document.querySelector('.player-toggle-icon i');
-    
-    // Playlist selector
-    const playlistSelectorElem = document.getElementById('playlistSelector');
-    
-    // Player controls
-    const playPauseBtn = document.getElementById('playPauseBtn');
-    const rewindBtn = document.getElementById('rewindBtn');
-    const forwardBtn = document.getElementById('forwardBtn');
     
     // Progress
     const progressSlider = document.getElementById('progressSlider');
@@ -274,7 +280,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================== CANCEL PROGRESS UPDATES ==================
     // Stops updating progress bar when paused
     function stopProgressBar() {
-        cancelAnimationFrame(progressInterval);
+        if (progressInterval) {
+            cancelAnimationFrame(progressInterval);
+            progressInterval = null;
+        }
     }
 
     // =========================================
@@ -381,8 +390,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Playlist selector change handler
-    if (playlistSelectorElem) {
-        playlistSelectorElem.addEventListener('change', function(e) {
+    const playlistSelector = document.getElementById('playlistSelector');
+    if (playlistSelector) {
+        playlistSelector.addEventListener('change', function(e) {
             const selectedPlaylist = e.target.value;
             switchPlaylist(selectedPlaylist);
         });
@@ -447,23 +457,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // PLAYLIST FUNCTIONS
     // =========================================
     
-    // Populate playlist selector dropdown
-    function populatePlaylistSelector() {
-        const selector = document.getElementById('playlistSelector');
-        if (!selector) return;
-        
-        selector.innerHTML = '';
-        for (const playlistName in playlists) {
-            const option = document.createElement('option');
-            option.value = playlistName;
-            option.textContent = playlistName;
-            if (playlistName === currentPlaylistName) {
-                option.selected = true;
-            }
-            selector.appendChild(option);
-        }
-    }
-    
     // Switch to a different playlist
     function switchPlaylist(playlistName) {
         currentPlaylistName = playlistName;
@@ -471,14 +464,8 @@ document.addEventListener('DOMContentLoaded', function() {
         defaultSongPlayed = false;
         currentSongIndex = -1;
         
-        // If player is ready and already playing, play the default song again
-        if (isPlayerReady) {
-            player.loadVideoById(DEFAULT_VIDEO_ID);
-            player.playVideo();
-            playerState.videoId = DEFAULT_VIDEO_ID;
-            setTimeout(updateSongTitle, 1000);
-            updatePlayButton();
-        }
+        // Just update the dropdown - the user will click play to start
+        console.log('Playlist switched to:', playlistName);
     }
     
     // Get next song index (random, no repeats until 75% played)
@@ -486,23 +473,27 @@ document.addEventListener('DOMContentLoaded', function() {
         const playlist = playlists[currentPlaylistName];
         const threshold = Math.floor(playlist.length * 0.75);
         
+        // Count unique songs that have been played
+        const uniquePlayed = new Set(playedIndices);
+        
         // If we've played less than 75%, only pick from unplayed songs
-        if (playedIndices.length < threshold) {
+        if (uniquePlayed.size < threshold) {
             const unplayedIndices = playlist
                 .map((_, idx) => idx)
-                .filter(idx => !playedIndices.includes(idx));
+                .filter(idx => !uniquePlayed.has(idx));
             
             if (unplayedIndices.length === 0) {
-                playedIndices = []; // Reset if all played
+                // Reset if all played
+                uniquePlayed.clear();
+                playedIndices = [];
                 const randomIdx = Math.floor(Math.random() * playlist.length);
                 playedIndices.push(randomIdx);
                 return randomIdx;
             }
             
-            const randomIdx = Math.floor(Math.random() * unplayedIndices.length);
-            const selectedIdx = unplayedIndices[randomIdx];
-            playedIndices.push(selectedIdx);
-            return selectedIdx;
+            const randomIdx = unplayedIndices[Math.floor(Math.random() * unplayedIndices.length)];
+            playedIndices.push(randomIdx);
+            return randomIdx;
         }
         
         // After 75%, allow repeats
@@ -513,19 +504,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Play default song first
     function playDefaultSong() {
-        if (!defaultSongPlayed) {
-            defaultSongPlayed = true;
-            currentSongIndex = -1; // Special marker for default song
-            if (isPlayerReady) {
-                player.loadVideoById(DEFAULT_VIDEO_ID);
-                player.playVideo();
-                playerState.videoId = DEFAULT_VIDEO_ID;
-                setTimeout(updateSongTitle, 1000);
-            }
-            updatePlayButton();
-        } else {
-            playNextSong();
+        defaultSongPlayed = true;
+        currentSongIndex = -1; // Special marker for default song
+        if (isPlayerReady) {
+            player.loadVideoById(DEFAULT_VIDEO_ID);
+            player.playVideo();
+            playerState.videoId = DEFAULT_VIDEO_ID;
+            setTimeout(updateSongTitle, 1000);
         }
+        updatePlayButton();
     }
     
     // Play next song from playlist
@@ -545,11 +532,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Play previous song from playlist
     function playPreviousSong() {
+        // If currently on default song
         if (currentSongIndex === -1 && defaultSongPlayed) {
-            // If currently on default song, go to the last played song
-            if (playedIndices.length > 1) {
-                // Remove current index and get the previous one
-                const currentIndex = playedIndices.pop();
+            // If we have played songs, go to the last one
+            if (playedIndices.length > 0) {
                 const prevIndex = playedIndices[playedIndices.length - 1];
                 currentSongIndex = prevIndex;
                 const prevVideoId = playlists[currentPlaylistName][prevIndex];
@@ -562,30 +548,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 updatePlayButton();
             } else {
-                // No previous songs, go back to default
+                // No previous songs, stay on default
                 playDefaultSong();
             }
-        } else if (currentSongIndex !== -1) {
-            // We're in playlist mode, go to previous song in playedIndices
-            if (playedIndices.length > 1) {
-                const currentIndex = playedIndices.pop();
-                const prevIndex = playedIndices[playedIndices.length - 1];
-                currentSongIndex = prevIndex;
-                const prevVideoId = playlists[currentPlaylistName][prevIndex];
-                
-                if (isPlayerReady) {
-                    player.loadVideoById(prevVideoId);
-                    player.playVideo();
-                    playerState.videoId = prevVideoId;
-                    setTimeout(updateSongTitle, 1000);
-                }
-                updatePlayButton();
-            } else {
-                // No previous songs, go back to default
-                playDefaultSong();
+            return;
+        }
+        
+        // If in playlist mode, go to previous song
+        if (playedIndices.length > 1) {
+            // Remove the last index (current) and get the new last (previous)
+            playedIndices.pop();
+            const prevIndex = playedIndices[playedIndices.length - 1];
+            currentSongIndex = prevIndex;
+            const prevVideoId = playlists[currentPlaylistName][prevIndex];
+            
+            if (isPlayerReady) {
+                player.loadVideoById(prevVideoId);
+                player.playVideo();
+                playerState.videoId = prevVideoId;
+                setTimeout(updateSongTitle, 1000);
             }
+            updatePlayButton();
+        } else if (playedIndices.length === 1) {
+            // Only one song played, go back to default
+            currentSongIndex = -1;
+            playDefaultSong();
         } else {
-            // First song, just play default
+            // No songs played yet, stay on default
             playDefaultSong();
         }
     }
@@ -622,9 +611,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isMenuOpen) return;  // Already open
         
         isMenuOpen = true;
-        // Populate playlist selector dropdown
-        populatePlaylistSelector();
-        
         // Expand the button into the menu
         musicPlayerBtn.style.display = 'none';
         musicPlayerExpanded.classList.add('open');
