@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ================== SITE TITLE - CHANGE YOUR SITE NAME ================== -->
     <title>LYL8962 | Personal Website</title>
+    <!-- ================== META DESCRIPTION - YOUR SITE'S DESCRIPTION ================== -->
     <meta name="description" content="Personal website of LYL8962 - Developer, Creator, and Tech Enthusiast">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Music Player Button -->
+    <!-- ================== MUSIC PLAYER BUTTON ================== -->
+    <!-- Don't delete this unless you want to remove the music player feature -->
     <button class="music-player-btn" id="musicPlayerBtn">
         <div class="player-content">
             <i class="fas fa-play"></i>
@@ -36,25 +39,32 @@
         </div>
     </button>
 
-    <!-- Navigation -->
+    <!-- ================== NAVIGATION BAR ================== -->
+    <!-- Change your username in the logo (line 43) -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
+                <!-- YOUR NAME/BRAND HERE - Change "LYL8962" to your name/brand -->
                 <a href="#home">LYL8962</a>
             </div>
             <ul class="nav-links">
+                <!-- Navigation Links - Change text as needed -->
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="social-links">
+                <!-- ================== SOCIAL MEDIA LINKS - HEADER SECTION ================== -->
+                <!-- GitHub Link - Change LYL8962 to your GitHub username -->
                 <a href="https://github.com/LYL8962" target="_blank" aria-label="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
+                <!-- Twitter Link - Add your Twitter username or remove this link -->
                 <a href="#" target="_blank" aria-label="Twitter">
                     <i class="fab fa-twitter"></i>
                 </a>
+                <!-- LinkedIn Link - Add your LinkedIn URL or remove this link -->
                 <a href="#" target="_blank" aria-label="LinkedIn">
                     <i class="fab fa-linkedin"></i>
                 </a>
@@ -62,12 +72,16 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- ================== HERO SECTION (MAIN BANNER) ================== -->
+    <!-- Change your name, title, and bio in this section -->
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
+                <!-- ================== YOUR NAME HERE ================== -->
                 <h1 class="hero-title">Hello, I'm <span class="highlight">LYL8962</span></h1>
+                <!-- ================== YOUR TITLE/BIO HERE ================== -->
                 <p class="hero-subtitle">Developer | Creator | Tech Enthusiast</p>
+                <!-- ================== YOUR DESCRIPTION HERE ================== -->
                 <p class="hero-description">Building cool things and exploring technology one project at a time.</p>
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -77,41 +91,50 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- ================== ABOUT ME SECTION ================== -->
     <section id="about" class="about">
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-text">
+                    <!-- ================== ABOUT PARAGRAPH 1 ================== -->
                     <p>I'm a passionate developer who loves creating solutions to real-world problems. My journey began with simple projects and has evolved into exploring various aspects of technology.</p>
                     <p>My interests include:</p>
                     <ul class="interests-list">
+                        <!-- ================== YOUR INTERESTS/LISTS ================== -->
+                        <!-- Change the icons and text to match your actual interests -->
                         <li><i class="fas fa-code"></i> Software Development</li>
                         <li><i class="fas fa-gamepad"></i> Game Development</li>
                         <li><i class="fas fa-pen-nib"></i> Technical Writing</li>
                         <li><i class="fas fa-tools"></i> Tool Creation</li>
                     </ul>
+                    <!-- ================== ABOUT PARAGRAPH 2 ================== -->
                     <p>Whether it's Python scripts, game modding, or utility tools, I enjoy the process of building and learning.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- ================== PROJECTS SECTION ================== -->
     <section id="projects" class="projects">
         <div class="container">
             <h2 class="section-title">My Projects</h2>
             <div class="projects-grid">
-                <!-- Project Card 1 -->
+                <!-- ================== PROJECT CARD 1 ================== -->
+                <!-- Auto-Clicker Project -->
                 <div class="project-card">
                     <div class="project-card-bg"></div>
                     <div class="project-content">
                         <div class="project-header">
+                            <!-- Project Title -->
                             <h3 class="project-title">Auto-Clicker</h3>
+                            <!-- Project Language/Type -->
                             <span class="project-language">Python</span>
                         </div>
+                        <!-- Project Description -->
                         <p class="project-description">An automation tool for click simulation and task automation.</p>
                         <div class="project-links">
+                            <!-- Project GitHub Link - Change to your actual GitHub URL -->
                             <a href="https://github.com/LYL8962/Auto-Clicker" target="_blank" class="btn-project">
                                 <i class="fab fa-github"></i> View Code
                             </a>
@@ -119,16 +142,21 @@
                     </div>
                 </div>
 
-                <!-- Project Card 2 -->
+                <!-- ================== PROJECT CARD 2 ================== -->
+                <!-- ETS2/ATS Save File Guide Project -->
                 <div class="project-card">
                     <div class="project-card-bg"></div>
                     <div class="project-content">
                         <div class="project-header">
+                            <!-- Project Title -->
                             <h3 class="project-title">ETS2/ATS Save File Guide</h3>
+                            <!-- Project Language/Type -->
                             <span class="project-language">Documentation</span>
                         </div>
+                        <!-- Project Description -->
                         <p class="project-description">Comprehensive guide on how to save and edit files in American Truck Simulator and Euro Truck Simulator.</p>
                         <div class="project-links">
+                            <!-- Project GitHub Link -->
                             <a href="https://github.com/LYL8962/ETS2-ATS_What-is-in-the-save-file" target="_blank" class="btn-project">
                                 <i class="fab fa-github"></i> View Guide
                             </a>
@@ -136,16 +164,21 @@
                     </div>
                 </div>
 
-                <!-- Project Card 3 -->
+                <!-- ================== PROJECT CARD 3 ================== -->
+                <!-- Your Personal Website Project -->
                 <div class="project-card">
                     <div class="project-card-bg"></div>
                     <div class="project-content">
                         <div class="project-header">
+                            <!-- Project Title -->
                             <h3 class="project-title">LYL8962.github.io</h3>
+                            <!-- Project Language/Type -->
                             <span class="project-language">Web</span>
                         </div>
+                        <!-- Project Description -->
                         <p class="project-description">This personal website and portfolio showcasing my work and projects.</p>
                         <div class="project-links">
+                            <!-- Project GitHub Link -->
                             <a href="https://github.com/LYL8962/LYL8962.github.io" target="_blank" class="btn-project">
                                 <i class="fab fa-github"></i> View Code
                             </a>
@@ -153,16 +186,21 @@
                     </div>
                 </div>
 
-                <!-- Project Card 4 -->
+                <!-- ================== PROJECT CARD 4 ================== -->
+                <!-- Simple-Counter Project -->
                 <div class="project-card">
                     <div class="project-card-bg"></div>
                     <div class="project-content">
                         <div class="project-header">
+                            <!-- Project Title -->
                             <h3 class="project-title">Simple-Counter</h3>
+                            <!-- Project Language/Type -->
                             <span class="project-language">Python</span>
                         </div>
+                        <!-- Project Description -->
                         <p class="project-description">A basic yet functional counter application built with Python.</p>
                         <div class="project-links">
+                            <!-- Project GitHub Link -->
                             <a href="https://github.com/LYL8962/Simple-Counter" target="_blank" class="btn-project">
                                 <i class="fab fa-github"></i> View Code
                             </a>
@@ -170,16 +208,21 @@
                     </div>
                 </div>
 
-                <!-- Project Card 5 -->
+                <!-- ================== PROJECT CARD 5 ================== -->
+                <!-- Personal Repository Project -->
                 <div class="project-card">
                     <div class="project-card-bg"></div>
                     <div class="project-content">
                         <div class="project-header">
+                            <!-- Project Title -->
                             <h3 class="project-title">Personal Repository</h3>
+                            <!-- Project Language/Type -->
                             <span class="project-language">Various</span>
                         </div>
+                        <!-- Project Description -->
                         <p class="project-description">My main repository containing various projects and experiments.</p>
                         <div class="project-links">
+                            <!-- Project GitHub Link -->
                             <a href="https://github.com/LYL8962/LYL8962" target="_blank" class="btn-project">
                                 <i class="fab fa-github"></i> View Code
                             </a>
@@ -190,25 +233,33 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- ================== CONTACT SECTION ================== -->
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-content">
+                <!-- ================== CONTACT DESCRIPTION ================== -->
                 <p class="contact-description">Have a question or want to collaborate on a project? Feel free to reach out!</p>
                 <div class="contact-methods">
+                    <!-- ================== CONTACT METHOD 1: GITHUB ================== -->
                     <a href="https://github.com/LYL8962" target="_blank" class="contact-method">
                         <i class="fab fa-github"></i>
                         <span>GitHub</span>
                     </a>
+                    <!-- ================== CONTACT METHOD 2: EMAIL ================== -->
+                    <!-- Change your.email@example.com to your actual email address -->
                     <a href="mailto:your.email@example.com" class="contact-method">
                         <i class="fas fa-envelope"></i>
                         <span>Email</span>
                     </a>
+                    <!-- ================== CONTACT METHOD 3: TWITTER ================== -->
+                    <!-- Add your Twitter URL or delete this section if not needed -->
                     <a href="#" class="contact-method">
                         <i class="fab fa-twitter"></i>
                         <span>Twitter</span>
                     </a>
+                    <!-- ================== CONTACT METHOD 4: LINKEDIN ================== -->
+                    <!-- Add your LinkedIn URL or delete this section if not needed -->
                     <a href="#" class="contact-method">
                         <i class="fab fa-linkedin"></i>
                         <span>LinkedIn</span>
@@ -218,15 +269,19 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ================== FOOTER SECTION ================== -->
     <footer class="footer">
         <div class="container">
+            <!-- ================== FOOTER COPYRIGHT ================== -->
+            <!-- Change LYL8962 to your name and update year -->
             <p class="footer-text">&copy; 2026 LYL8962. All rights reserved.</p>
+            <!-- ================== FOOTER SUBTEXT ================== -->
             <p class="footer-subtext">Built with passion and JavaScript.</p>
         </div>
     </footer>
 
-    <!-- YouTube Player (Hidden) -->
+    <!-- ================== YOUTUBE PLAYER (DO NOT DELETE) ================== -->
+    <!-- This hidden iframe is required for the music player to work -->
     <div style="display: none;">
         <iframe id="youtubePlayer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>

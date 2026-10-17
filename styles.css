@@ -1,29 +1,34 @@
 /* =========================================
-   Dark Modern Theme Styles
+   LYL8962 Personal Website Styles
+   =========================================
+   This file contains all the styling for the website.
+   Use CSS variables in :root to easily change colors.
    ========================================= */
 
-/* Reset and Base Styles */
+/* ================== RESET AND BASE STYLES ================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* ================== CSS VARIABLES - CHANGE COLORS HERE ================== */
+/* You can change the entire theme by modifying these values */
 :root {
-    --primary-color: #f97316;
-    --primary-gradient: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
-    --secondary-color: #facc15;
-    --background-color: #0f172a;
-    --surface-color: #1e293b;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --border-color: #334155;
-    --card-bg: #0f172a;
-    --transition: all 0.3s ease;
+    --primary-color: #f97316;              /* CHANGE ME: Main accent color (Orange) */
+    --primary-gradient: linear-gradient(135deg, #f97316 0%, #fb923c 100%);  /* Main gradient */
+    --secondary-color: #facc15;            /* CHANGE ME: Secondary color (Yellow) */
+    --background-color: #0f172a;           /* CHANGE ME: Background color (Dark blue) */
+    --surface-color: #1e293b;              /* CHANGE ME: Cards/surfaces color */
+    --text-primary: #f8fafc;               /* CHANGE ME: Main text color */
+    --text-secondary: #94a3b8;             /* CHANGE ME: Secondary text color */
+    --border-color: #334155;               /* CHANGE ME: Border color */
+    --card-bg: #0f172a;                    /* CHANGE ME: Card background color */
+    --transition: all 0.3s ease;           /* Animation timing */
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth;  /* Enables smooth scrolling for anchor links */
 }
 
 body {
@@ -41,7 +46,7 @@ body {
 }
 
 /* =========================================
-   Navigation
+   NAVIGATION STYLES
    ========================================= */
 .navbar {
     position: fixed;
@@ -124,7 +129,7 @@ body {
 }
 
 /* =========================================
-   Hero Section
+   HERO SECTION STYLES
    ========================================= */
 .hero {
     min-height: 100vh;
@@ -217,7 +222,7 @@ body {
 }
 
 /* =========================================
-   Buttons
+   BUTTON STYLES
    ========================================= */
 .btn {
     display: inline-flex;
@@ -313,7 +318,7 @@ body {
 }
 
 /* =========================================
-   Section Styles
+   SECTION STYLES
    ========================================= */
 section {
     padding: 8rem 0;
@@ -337,7 +342,7 @@ section {
 }
 
 /* =========================================
-   About Section
+   ABOUT SECTION STYLES
    ========================================= */
 .about {
     background: var(--surface-color);
@@ -383,7 +388,7 @@ section {
 }
 
 /* =========================================
-   Projects Section
+   PROJECTS SECTION STYLES
    ========================================= */
 .projects-grid {
     display: grid;
@@ -464,7 +469,7 @@ section {
 }
 
 /* =========================================
-   Contact Section
+   CONTACT SECTION STYLES
    ========================================= */
 .contact {
     background: var(--surface-color);
@@ -515,7 +520,7 @@ section {
 }
 
 /* =========================================
-   Footer
+   FOOTER STYLES
    ========================================= */
 .footer {
     background: var(--surface-color);
@@ -537,318 +542,7 @@ section {
 }
 
 /* =========================================
-   Audio Player
-   ========================================= */
-.audio-player {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--surface-color);
-    border-top: 1px solid var(--border-color);
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    z-index: 999;
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.audio-player.active {
-    transform: translateY(0);
-}
-
-.player-content {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex: 1;
-    min-width: 0;
-}
-
-.player-info {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.player-title {
-    color: var(--text-primary);
-    font-weight: 600;
-    font-size: 0.95rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.progress-bar-container {
-    width: 100%;
-}
-
-.progress-bar {
-    position: relative;
-    width: 100%;
-    height: 6px;
-    background: var(--border-color);
-    border-radius: 3px;
-    cursor: pointer;
-    overflow: hidden;
-}
-
-.progress-slider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 2;
-}
-
-.progress-slider {
-    width: 100%;
-    height: 4px;
-    border-radius: 2px;
-    background: var(--border-color);
-    outline: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-}
-
-.progress-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    cursor: pointer;
-    transition: transform 0.2s;
-    box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
-}
-
-.progress-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-.progress-slider::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    cursor: pointer;
-    border: none;
-    transition: transform 0.2s;
-    box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
-}
-
-.progress-slider::-moz-range-thumb:hover {
-    transform: scale(1.2);
-}
-
-.player-time {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-}
-
-.player-title {
-    color: var(--text-primary);
-    font-weight: 600;
-    font-size: 0.95rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.progress-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-.player-time {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-}
-
-.progress-fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: var(--primary-gradient);
-    border-radius: 3px;
-    pointer-events: none;
-    transition: width 0.1s;
-}
-
-.btn-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
-/* =========================================
-   Start Music Button
-   ========================================= */
-.start-music-btn {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background: var(--primary-gradient);
-    color: white;
-    border: none;
-    padding: 1rem 1.5rem;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
-    transition: var(--transition);
-    z-index: 998;
-    animation: pulse 2s infinite;
-}
-
-.start-music-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(249, 115, 22, 0.4);
-}
-
-.start-music-btn i {
-    font-size: 1.2rem;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
-    }
-    50% {
-        box-shadow: 0 10px 40px rgba(249, 115, 22, 0.5);
-    }
-}
-
-/* =========================================
-   YouTube Player
-   ========================================= */
-#youtube-player-container,
-#youtubePlayer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 1px;
-    height: 1px;
-    border: none;
-    opacity: 0;
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* =========================================
-   Responsive Design
-   ========================================= */
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.5rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1.2rem;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .contact-methods {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    }
-
-    .audio-player {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-    }
-
-    .player-content {
-        width: 100%;
-    }
-
-    .player-controls {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .btn-close {
-        top: 10px;
-        right: 10px;
-        width: 30px;
-        height: 30px;
-    }
-
-    .music-player-btn {
-        bottom: 1.5rem;
-        right: 1.5rem;
-        width: 280px;
-        padding: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    section {
-        padding: 5rem 0;
-    }
-
-    .hero-title {
-        font-size: 2rem;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-    }
-
-    .music-player-btn {
-        bottom: 1.5rem;
-        right: 1.5rem;
-        width: 280px;
-        padding: 1rem;
-    }
-}
-
-/* Animation classes */
-.fade-in {
-    animation: fadeIn 0.5s ease forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* =========================================
-   Music Player Button (Integrated)
+   MUSIC PLAYER BUTTON STYLES
    ========================================= */
 .music-player-btn {
     position: fixed;
@@ -1001,4 +695,79 @@ section {
 .music-player-btn .btn-icon:hover {
     color: var(--primary-color);
     background: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================
+   RESPONSIVE DESIGN - MOBILE STYLES
+   ========================================= */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .nav-links {
+        display: none;  /* Hide navigation links on mobile (hamburger menu needed) */
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;  /* Stack projects on mobile */
+    }
+
+    .contact-methods {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .music-player-btn {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 280px;  /* Smaller player on mobile */
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    section {
+        padding: 5rem 0;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;  /* Full width buttons on small screens */
+    }
+
+    .music-player-btn {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 280px;
+        padding: 1rem;
+    }
+}
+
+/* =========================================
+   ANIMATION CLASSES
+   ========================================= */
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

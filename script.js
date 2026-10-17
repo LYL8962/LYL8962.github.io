@@ -1,26 +1,38 @@
 // =========================================
 // LYL8962 Personal Website JavaScript
 // =========================================
+// This file handles:
+// - YouTube music player functionality
+// - Navigation and smooth scrolling
+// - Project card hover effects
+// - Keyboard shortcuts
+// =========================================
 
 document.addEventListener('DOMContentLoaded', function() {
     // =========================================
-    // YouTube Player Setup
+    // YOUTUBE PLAYER SETUP
     // =========================================
+    
+    // ================== MUSIC PLAYER STATE ==================
+    // Change the videoId below to your preferred YouTube video ID
+    // Get YouTube video IDs from: https://www.youtube.com/watch?v=VIDEO_ID_HERE
     let playerState = {
         isPlaying: false,
         isMuted: false,
-        videoId: 'jtL_OQZc5g4',
-        volume: 50
+        videoId: 'jtL_OQZc5g4',  // CHANGE THIS to your preferred YouTube video ID
+        volume: 50                // Default volume (0-100)
     };
 
     let player;
     let ytApiLoaded = false;
     let isPlayerReady = false;
 
-    // Default YouTube track
-    const DEFAULT_VIDEO_ID = 'jtL_OQZc5g4';
+    // Default YouTube track - Change this to your preferred video ID
+    // This is used if playerState.videoId doesn't work
+    const DEFAULT_VIDEO_ID = 'jtL_OQZc5g4';  // CHANGE THIS to your preferred YouTube video ID
     
-    // Get the song name from YouTube API
+    // ================== GET SONG TITLE FUNCTION ==================
+    // This function fetches and displays the YouTube video title
     function getSongTitle() {
         if (player && player.getVideoData) {
             const videoData = player.getVideoData();
@@ -31,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return 'Loading...';
     }
 
-    // Try to initialize YouTube player
+    // ================== CHECK IF YOUTUBE API IS AVAILABLE ==================
     function tryInitializeYouTubePlayer() {
         if (typeof YT !== 'undefined' && YT.Player) {
             console.log('YouTube API loaded successfully');
@@ -42,27 +54,29 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
     }
 
-    // Initialize YouTube iframe API
+    // ================== INITIALIZE YOUTUBE IFRAME API ==================
+    // This creates the YouTube player when the API is ready
     function onYouTubeIframeAPIReady() {
         console.log('Initializing YouTube player...');
         
-        // Create the iframe
+        // Create the iframe container
         const playerDiv = document.createElement('div');
         playerDiv.id = 'youtube-player-container';
         document.body.appendChild(playerDiv);
         
+        // Initialize the YouTube player with settings
         player = new YT.Player('youtube-player-container', {
             height: '100%',
             width: '100%',
-            videoId: DEFAULT_VIDEO_ID,
+            videoId: DEFAULT_VIDEO_ID,  // Uses the default video ID defined above
             playerVars: {
-                'playsinline': 1,
-                'rel': 0,
-                'controls': 0,
-                'disablekb': 1,
-                'showinfo': 0,
-                'autohide': 1,
-                'mute': 0
+                'playsinline': 1,        // Allow playback on iOS
+                'rel': 0,                // Show related videos only from same channel
+                'controls': 0,           // Hide player controls (we use our own buttons)
+                'disablekb': 1,          // Disable keyboard controls
+                'showinfo': 0,           // Hide video info
+                'autohide': 1,           // Auto-hide controls
+                'mute': 0                // Start unmuted
             },
             events: {
                 'onReady': onPlayerReady,
@@ -74,26 +88,31 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('YouTube player initialized');
     }
 
+    // ================== ON PLAYER READY ==================
+    // Runs when the YouTube player is ready
     function onPlayerReady(event) {
         console.log('Player is ready');
         player.setVolume(playerState.volume);
         updateMuteIcon();
         
-        // Update song title
+        // Update song title after a short delay
         setTimeout(() => {
             updateSongTitle();
         }, 1000);
         
-    // Auto-play the song when player is ready
-    setTimeout(() => {
-        console.log('Auto-playing music...');
-        player.playVideo();
-        playerState.isPlaying = true;
-        updatePlayButton();
-        startProgressUpdates();  // Start progress updates
-    }, 1000);
+        // Auto-play the song when player is ready
+        // Note: Some browsers may block auto-play
+        setTimeout(() => {
+            console.log('Auto-playing music...');
+            player.playVideo();
+            playerState.isPlaying = true;
+            updatePlayButton();
+            startProgressUpdates();  // Start progress updates
+        }, 1000);
     }
 
+    // ================== ON PLAYER STATE CHANGE ==================
+    // Tracks when video plays, pauses, or ends
     function onPlayerStateChange(event) {
         playerState.isPlaying = event.data === YT.PlayerState.PLAYING;
         updatePlayButton();
@@ -106,7 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Update progress bar when playing
+    // ================== UPDATE PROGRESS BAR ==================
+    // Updates the progress bar position while playing
     function updateProgressBar() {
         if (!playerState.isPlaying) return;
         
@@ -128,10 +148,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =========================================
-    // UI Functions
+    // UI FUNCTIONS
     // =========================================
     
-    // DOM Elements
+    // ================== DOM ELEMENTS ==================
+    // These are references to HTML elements used by JavaScript
     const musicPlayerBtn = document.getElementById('musicPlayerBtn');
     const muteBtn = document.getElementById('muteBtn');
     const progressSlider = document.getElementById('progressSlider');
@@ -140,9 +161,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentTimeEl = document.querySelector('.current-time');
     const durationEl = document.querySelector('.duration');
     
-    // Check if YouTube API is available
+    // ================== YOUTUBE API LOADER ==================
+    // If YouTube API isn't loaded yet, load it dynamically
     if (!tryInitializeYouTubePlayer()) {
-        // Load YouTube API dynamically
         console.log('Loading YouTube API...');
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
@@ -153,7 +174,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up callback for when API is ready
     window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
-    // Update song title
+    // ================== UPDATE SONG TITLE ==================
+    // Updates the displayed song title
     function updateSongTitle() {
         const title = getSongTitle();
         if (title && title !== 'Loading...' && title !== 'undefined' && title !== '') {
@@ -161,7 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Update play/pause button
+    // ================== UPDATE PLAY/PAUSE BUTTON ==================
+    // Changes play icon to pause icon and vice versa
     function updatePlayButton() {
         const icon = musicPlayerBtn.querySelector('.fas');
         const progressBar = musicPlayerBtn.querySelector('.progress-bar-container');
@@ -176,7 +199,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Update mute icon
+    // ================== UPDATE MUTE ICON ==================
+    // Changes mute/unmute icon based on current state
     function updateMuteIcon() {
         const icon = muteBtn.querySelector('i');
         if (playerState.isMuted) {
@@ -186,7 +210,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Format time (seconds to mm:ss)
+    // ================== FORMAT TIME ==================
+    // Converts seconds to MM:SS format
     function formatTime(seconds) {
         if (!seconds || isNaN(seconds)) return '0:00';
         const mins = Math.floor(seconds / 60);
@@ -194,7 +219,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
     }
 
-    // Progress slider functionality
+    // ================== PROGRESS SLIDER FUNCTIONALITY ==================
+    // Allows users to seek to different parts of the video
     progressSlider.addEventListener('input', function() {
         if (isPlayerReady && player.seekTo) {
             const duration = player.getDuration();
@@ -204,12 +230,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Update progress display
+    // ================== UPDATE PROGRESS FILL ==================
+    // Updates the visual progress bar width
     function updateProgressFill(percentage) {
         progressFill.style.width = percentage + '%';
     }
 
-    // Update progress during playback
+    // ================== UPDATE PROGRESS DURING PLAYBACK ==================
+    // This function is called repeatedly to update the progress bar
     let progressInterval;
     function updateProgressBar() {
         if (playerState.isPlaying && isPlayerReady && player.getCurrentTime && player.getDuration) {
@@ -234,22 +262,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Cancel progress updates
+    // ================== CANCEL PROGRESS UPDATES ==================
+    // Stops updating progress bar when paused
     function stopProgressBar() {
         cancelAnimationFrame(progressInterval);
     }
 
-    // Start progress updates when music starts
-    // Progress updates are handled in updatePlayButton when playing starts
-
-    // Update progress button
+    // ================== START PROGRESS UPDATES ==================
     function startProgressUpdates() {
         if (playerState.isPlaying) {
             updateProgressBar();
         }
     }
 
-    // Music player button click - toggle play/pause
+    // ================== MUSIC PLAYER BUTTON CLICK ==================
+    // Toggle play/pause when clicking the music player button
     musicPlayerBtn.addEventListener('click', function(e) {
         // Don't toggle if clicking on mute button or progress bar
         if (e.target === muteBtn || e.target.closest('.progress-bar-container')) {
@@ -268,9 +295,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Mute button
+    // ================== MUTE BUTTON CLICK ==================
+    // Toggle mute/unmute when clicking the mute button
     muteBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
+        e.stopPropagation();  // Prevent triggering play/pause
         if (!isPlayerReady) return;
         
         if (playerState.isMuted) {
@@ -285,11 +313,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =========================================
-    // Navigation Scroll Effects
+    // NAVIGATION SCROLL EFFECTS
     // =========================================
     
     const navBar = document.querySelector('.navbar');
     
+    // Changes navbar style when user scrolls down
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
             navBar.style.background = 'rgba(15, 23, 42, 0.95)';
@@ -301,53 +330,53 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =========================================
-    // Smooth Scrolling for Navigation Links
+    // SMOOTH SCROLLING FOR NAVIGATION LINKS
     // =========================================
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
+            e.preventDefault();  // Prevent default anchor jump
             
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
             
             if (targetElement) {
-                const headerOffset = 80;
+                const headerOffset = 80;  // Adjust for fixed header height
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                 
                 window.scrollTo({
                     top: offsetPosition,
-                    behavior: 'smooth'
+                    behavior: 'smooth'  // Smooth scroll animation
                 });
             }
         });
     });
 
     // =========================================
-    // Project Card Hover Effects
+    // PROJECT CARD HOVER EFFECTS
     // =========================================
     
     const projectCards = document.querySelectorAll('.project-card');
     
     projectCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px)';
+            this.style.transform = 'translateY(-10px)';  // Move up on hover
         });
         
         card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
+            this.style.transform = 'translateY(0)';  // Return to original position
         });
     });
 
     // =========================================
-    // Keyboard Shortcuts
+    // KEYBOARD SHORTCUTS
     // =========================================
     
     document.addEventListener('keydown', function(e) {
         // Spacebar toggles play/pause
         if (e.code === 'Space' && !e.target.matches('input, textarea')) {
-            e.preventDefault();
+            e.preventDefault();  // Prevent page scrolling
             if (isPlayerReady) {
                 if (playerState.isPlaying) {
                     player.pauseVideo();
@@ -366,10 +395,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =========================================
-    // Initialize
+    // INITIALIZE
     // =========================================
     
-    // Add fade-in animation to sections
+    // Add fade-in animation to sections as they scroll into view
     const sections = document.querySelectorAll('section');
     const observerOptions = {
         threshold: 0.1,
@@ -390,10 +419,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =========================================
-    // Custom YouTube Player Functions
+    // CUSTOM YOUTUBE PLAYER FUNCTIONS
     // =========================================
     
-    // Function to change YouTube track
+    // Function to change YouTube track - Call window.changeYouTubeTrack('VIDEO_ID')
     window.changeYouTubeTrack = function(videoId) {
         if (isPlayerReady) {
             player.loadVideoById(videoId);
@@ -403,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Function to play a YouTube URL
+    // Function to play a YouTube URL - Call window.playYouTubeUrl('URL')
     window.playYouTubeUrl = function(url) {
         const videoId = extractYouTubeVideoId(url);
         if (videoId) {
@@ -413,7 +442,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Helper function to extract YouTube video ID
+    // Helper function to extract YouTube video ID from various URL formats
     function extractYouTubeVideoId(url) {
         const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
         const match = url.match(regExp);
