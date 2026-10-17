@@ -495,12 +495,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // =========================================
     let isMenuOpen = false;
     
-    musicPlayerBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleMenu();
-    });
+    console.log('Music player button:', musicPlayerBtn);
+    console.log('Music player menu:', musicPlayerMenu);
+    
+    if (musicPlayerBtn && musicPlayerMenu) {
+        musicPlayerBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMenu();
+        });
+    }
     
     function toggleMenu() {
+        console.log('Toggle menu clicked, menu open:', isMenuOpen);
         isMenuOpen = !isMenuOpen;
         
         if (isMenuOpen) {
