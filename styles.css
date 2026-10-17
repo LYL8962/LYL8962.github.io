@@ -633,9 +633,10 @@ section {
     gap: 1rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     transition: var(--transition);
-    z-index: 998;
+    z-index: 1001;
     min-width: 300px;
     max-width: 350px;
+    pointer-events: auto;
 }
 
 .music-player-btn:hover {
