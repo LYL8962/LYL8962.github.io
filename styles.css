@@ -850,13 +850,15 @@ section::after {
     border: none;
     color: var(--text-primary);
     cursor: pointer;
-    padding: 0.75rem;
+    padding: 0.75rem 0.85rem;
     border-radius: 50%;
     transition: var(--transition);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+    width: 50px;
+    height: 50px;
 }
 
 .player-menu-content .btn-icon:hover {
@@ -877,6 +879,8 @@ section::after {
     justify-content: center;
     font-size: 1.2rem;
     margin-top: 0.5rem;
+    width: 40px;
+    height: 40px;
 }
 
 .player-collapse-btn:hover {

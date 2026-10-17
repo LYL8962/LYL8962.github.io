@@ -422,41 +422,46 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Music player expanded:', musicPlayerExpanded);
     console.log('Toggle icon:', toggleIcon);
     
+    // Get the collapse button
+    const playerCollapseBtn = document.getElementById('playerCollapseBtn');
+    
+    // Open menu when clicking the music player button (PLAY MUSIC)
     if (musicPlayerBtn && musicPlayerExpanded) {
         musicPlayerBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            toggleMenu();
+            openMenu();
         });
     }
     
-    function toggleMenu() {
-        isMenuOpen = !isMenuOpen;
-        
-        if (isMenuOpen) {
-            // Expand the button into the menu
-            musicPlayerBtn.style.display = 'none';
-            musicPlayerExpanded.classList.add('open');
-            toggleIcon.classList.remove('fa-chevron-up');
-            toggleIcon.classList.add('fa-chevron-down');
-            playMusicText.textContent = 'Music Playing';
-            // Stop progress updates when menu is opened
-            stopProgressBar();
-        } else {
-            // Collapse the menu back into the button
-            musicPlayerExpanded.classList.remove('open');
-            musicPlayerBtn.style.display = 'flex';
-            toggleIcon.classList.remove('fa-chevron-down');
-            toggleIcon.classList.add('fa-chevron-up');
-            playMusicText.textContent = 'Play Music';
-            // Stop progress updates when menu is closed
-            stopProgressBar();
-        }
+    // Collapse menu when clicking the collapse button
+    if (playerCollapseBtn) {
+        playerCollapseBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        });
     }
     
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (isMenuOpen && !musicPlayerBtn.contains(e.target) && !musicPlayerExpanded.contains(e.target)) {
-            toggleMenu();
-        }
-    });
+    function openMenu() {
+        if (isMenuOpen) return;  // Already open
+        
+        isMenuOpen = true;
+        // Expand the button into the menu
+        musicPlayerBtn.style.display = 'none';
+        musicPlayerExpanded.classList.add('open');
+        toggleIcon.classList.remove('fa-chevron-up');
+        toggleIcon.classList.add('fa-chevron-down');
+        playMusicText.textContent = 'Music Playing';
+    }
+    
+    function closeMenu() {
+        if (!isMenuOpen) return;  // Already closed
+        
+        isMenuOpen = false;
+        // Collapse the menu back into the button
+        musicPlayerExpanded.classList.remove('open');
+        musicPlayerBtn.style.display = 'flex';
+        toggleIcon.classList.remove('fa-chevron-down');
+        toggleIcon.classList.add('fa-chevron-up');
+        playMusicText.textContent = 'Play Music';
+    }
 });
