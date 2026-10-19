@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ================== SITE TITLE - CHANGE YOUR SITE NAME ================== -->
+    <title>LYL8962's Personal Website</title>
+    <!-- ================== META DESCRIPTION - YOUR SITE'S DESCRIPTION ================== -->
+    <meta name="description" content="Personal website of LYL8962 - Developer, Creator, and Tech Enthusiast">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- ================== FIXED BACKGROUND LAYER ================== -->
+    <!-- These elements stay in place while scrolling -->
+    <div class="bg-circle-1"></div>
+    <div class="bg-circle-2"></div>
+
+    <!-- ================== MUSIC PLAYER ================== -->
+    <!-- Don't delete this unless you want to remove the music player feature -->
+    <div class="music-player" id="musicPlayer">
+        <!-- Collapsed state (button) -->
+        <div class="music-player-collapsed" id="musicPlayerBtn">
+            <div class="player-toggle-icon">
+                <i class="fas fa-chevron-up"></i>
+            </div>
+            <span class="play-music-text">Play Music</span>
+        </div>
+        
+        <!-- Expanded state (menu) -->
+        <div class="music-player-expanded" id="musicPlayerMenu">
+            <div class="player-menu-content">
+                <!-- Playlist selector dropdown -->
+                <select class="playlist-selector" id="playlistSelector"></select>
+                <div class="player-title-wrapper">
+                    <span class="player-title">Loading Song...</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                        <input type="range" id="progressSlider" class="progress-slider" min="0" max="100" value="0">
+                    </div>
+                    <div class="player-time">
+                        <span class="current-time">0:00</span> / <span class="duration">0:00</span>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <button type="button" class="btn-icon" id="rewindBtn" aria-label="Rewind">
+                        <i class="fas fa-backward"></i>
+                    </button>
+                    <button type="button" class="btn-icon" id="playPauseBtn" aria-label="Play/Pause">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button type="button" class="btn-icon" id="forwardBtn" aria-label="Forward">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                </div>
+                <!-- NEW: collapse handle -->
+                <button class="player-collapse-btn" id="playerCollapseBtn" aria-label="Hide player">
+                    <i class="fas fa-chevron-down"></i> <span>Hide Player</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================== NAVIGATION BAR ================== -->
+    <!-- Change your username in the logo (line 43) -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <!-- YOUR NAME/BRAND HERE - Change "LYL8962" to your name/brand -->
+                <a href="#home">LYL8962</a>
+            </div>
+            <ul class="nav-links">
+                <!-- Navigation Links - Change text as needed -->
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ================== HERO SECTION (MAIN BANNER) ================== -->
+    <!-- Change your name, title, and bio in this section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <!-- ================== YOUR NAME HERE ================== -->
+                <h1 class="hero-title">Hello, I'm <span class="highlight">LYL8962</span></h1>
+                <!-- ================== YOUR TITLE/BIO HERE ================== -->
+                <p class="hero-subtitle">Programmer | Tech Enthusiast | Gamer</p>
+                <!-- ================== YOUR DESCRIPTION HERE ================== -->
+                <p class="hero-description">Exploring technology one project at a time.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================== ABOUT ME SECTION ================== -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+                <!-- Programming Column -->
+                <div class="about-column">
+                    <div class="about-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="about-column-title">Programming</h3>
+                    <p class="about-column-desc">
+                        I'm passionate about creating software solutions that solve real-world problems. My journey began with simple Python scripts and has evolved since.
+                    </p>
+                    <div class="about-interests">
+                        <span class="interest-tag">Python</span>
+                        <span class="interest-tag">C++</span>
+                    </div>
+                </div>
+
+                <!-- Gaming Column -->
+                <div class="about-column">
+                    <div class="about-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="about-column-title">Gaming</h3>
+                    <p class="about-column-desc">
+                        Gaming has been a major part of my life - from playing to modding and understanding game mechanics. I enjoy exploring game design and creating modifications.
+                    </p>
+                    <div class="about-interests">
+                        <span class="interest-tag">Euro Truck Simulator 2</span>
+                        <span class="interest-tag">American Truck Simulator</span>
+                        <span class="interest-tag">Unrailed / Unrailed 2</span>
+                        <span class="interest-tag">Warfare</span>
+                    </div>
+                </div>
+
+                <!-- Driving Column -->
+                <div class="about-column">
+                    <div class="about-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="about-column-title">Driving</h3>
+                    <p class="about-column-desc">
+                        Driving is more than just getting from A to B - it's about the journey, the feel, and the experience. I enjoy both virtual and real-world driving.
+                    </p>
+                    <div class="about-interests">
+                        <span class="interest-tag">Sim Racing</span>
+                        <span class="interest-tag">Trucks</span>
+                        <span class="interest-tag">Road Trips</span>
+                        <span class="interest-tag">2: Light Goods Vehicle</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================== PROJECTS SECTION ================== -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <!-- ================== PROJECT CARD 1 ================== -->
+                <!-- Auto-Clicker Project -->
+                <div class="project-card">
+                    <div class="project-card-bg"></div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <!-- Project Title -->
+                            <h3 class="project-title">Auto-Clicker</h3>
+                            <!-- Project Language/Type -->
+                            <span class="project-language">Python</span>
+                        </div>
+                        <!-- Project Description -->
+                        <p class="project-description">An automation tool for click simulation and with recording features.</p>
+                        <div class="project-links">
+                            <!-- Project GitHub Link - Change to your actual GitHub URL -->
+                            <a href="https://github.com/LYL8962/Auto-Clicker" target="_blank" class="btn-project">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================== PROJECT CARD 2 ================== -->
+                <!-- ETS2/ATS Save File Guide Project -->
+                <div class="project-card">
+                    <div class="project-card-bg"></div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <!-- Project Title -->
+                            <h3 class="project-title">ETS2/ATS Save File Guide</h3>
+                            <!-- Project Language/Type -->
+                            <span class="project-language">Documentation</span>
+                        </div>
+                        <!-- Project Description -->
+                        <p class="project-description">Comprehensive guide on what is in the save files of in Euro Truck Simulator 2 and American Truck Simulator.</p>
+                        <div class="project-links">
+                            <!-- Project GitHub Link -->
+                            <a href="https://github.com/LYL8962/ETS2-ATS_What-is-in-the-save-file" target="_blank" class="btn-project">
+                                <i class="fab fa-github"></i> View Guide
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- ================== PROJECT CARD 2 ================== -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ================== CONTACT SECTION ================== -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <!-- ================== CONTACT DESCRIPTION ================== -->
+                <p class="contact-description">Have a question or want to collaborate on a project? Feel free to reach out!</p>
+                <div class="contact-methods">
+                    <!-- ================== CONTACT METHOD 1: GITHUB ================== -->
+                    <a href="https://github.com/LYL8962" target="_blank" class="contact-method">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <!-- ================== CONTACT METHOD 2: EMAIL ================== -->
+                    <!-- Change your.email@example.com to your actual email address -->
+                    <a href="mailto:your.email@example.com" target="_blank" class="contact-method">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </a>
+                    <!-- ================== CONTACT METHOD 3: DISCORD ================== -->
+                    <!-- Add your Discord profile link below -->
+                    <!-- Format: https://discord.com/users/YOUR_DISCORD_ID -->
+                    <a href="https://discord.com/users/707919588704124938" target="_blank" class="contact-method">
+                        <i class="fab fa-discord"></i>
+                        <span>Discord</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================== FOOTER SECTION ================== -->
+    <footer class="footer">
+        <div class="container">
+            <!-- ================== FOOTER COPYRIGHT ================== -->
+            <!-- Change LYL8962 to your name and update year -->
+            <p class="footer-text">&copy; 2026 LYL8962. All rights reserved.</p>
+            <!-- ================== FOOTER SUBTEXT ================== -->
+            <p class="footer-subtext">Built with JavaScript.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
