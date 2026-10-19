@@ -370,7 +370,7 @@ section::after {
     backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: 20px;
-    padding: 2.5rem 2rem;
+    padding: 2cqw;
     transition: var(--transition);
 }
 
